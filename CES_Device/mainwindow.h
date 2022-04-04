@@ -26,11 +26,9 @@ private:
     QTimer *batteryLevelTimer;
     QTimer *powerOffTimer;
     QTimer *batteryLow_blinkTimer;
-    QTimer *doNothingTimer;
 
     QString state = "off";
     QString lowBattery_blinkStatus = "off";
-    bool firstCommand;
     connectionTest thingsIDK;
 
 private slots:
@@ -39,7 +37,6 @@ private slots:
     void displayBatteryLevel();
     void batteryDisplay_off();
     void lowBattery_blink();
-    void doNothing();
     void power_off();
 
     //Israels Functions

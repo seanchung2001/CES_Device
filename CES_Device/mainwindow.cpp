@@ -33,7 +33,6 @@ MainWindow::MainWindow(QWidget *parent)
     batteryLevelTimer = new QTimer();
     powerOffTimer = new QTimer();
     batteryLow_blinkTimer = new QTimer();
-    doNothingTimer = new QTimer();
 
     //SIGNAL-SLOT
     connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_on()));
@@ -171,13 +170,6 @@ void MainWindow::lowBattery_blink()
         }
         lowBattery_blinkStatus = "off";
     }
-}
-
-void MainWindow::doNothing()
-{
-    qDebug() << "ehllo";
-    batteryLow_blinkTimer->stop();
-    disconnect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(doNothing()));
 }
 
 void MainWindow::power_off()
