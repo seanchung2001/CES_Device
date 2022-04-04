@@ -32,6 +32,8 @@ MainWindow::MainWindow(QWidget *parent)
     //QTimer
     batteryLevelTimer = new QTimer();
     powerOffTimer = new QTimer();
+    batteryLow_blinkTimer = new QTimer();
+    doNothingTimer = new QTimer();
 
     //SIGNAL-SLOT
     connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_on()));
@@ -65,9 +67,24 @@ void MainWindow::power_on()
 
 void MainWindow::displayBatteryLevel()
 {
-    int tmpBatterylevel = 8;
+    int tmpBatterylevel = 2;
     for (int i = 1; i <= tmpBatterylevel; i++) {
-        if (i == 2) {
+        if (i == 1) {
+            if (i == tmpBatterylevel) {
+                connect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
+                batteryLow_blinkTimer->start(1000);
+                continue;
+            }
+            if (tmpBatterylevel != 2) {
+                ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+            }
+        }
+        else if (i == 2) {
+            if (i == tmpBatterylevel) {
+                connect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
+                batteryLow_blinkTimer->start(1000);
+                continue;
+            }
             ui->level_2->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
         else if (i == 3) {
@@ -94,8 +111,20 @@ void MainWindow::displayBatteryLevel()
 
 void MainWindow::batteryDisplay_off()
 {
+    int tmpBatteryLevel = 2;
     for (int i = 1; i <= 8; i++) {
-        if (i == 2) {
+        if (i == 1) {
+            if (i == tmpBatteryLevel) {
+                batteryLow_blinkTimer->stop();
+                disconnect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
+            }
+            ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        }
+        else if (i == 2) {
+            if (i == tmpBatteryLevel) {
+                batteryLow_blinkTimer->stop();
+                disconnect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
+            }
             ui->level_2->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
         else if (i == 3) {
@@ -119,15 +148,57 @@ void MainWindow::batteryDisplay_off()
     }
 }
 
+void MainWindow::lowBattery_blink()
+{
+    int tmpBatteryLevel = 2;
+    if (lowBattery_blinkStatus == "off") {
+        if (tmpBatteryLevel == 1) {
+            ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        }
+        else if (tmpBatteryLevel == 2) {
+            ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+            ui->level_2->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        }
+        lowBattery_blinkStatus = "on";
+    }
+    else {
+        if (tmpBatteryLevel == 1) {
+            ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        }
+        else if (tmpBatteryLevel == 2) {
+            ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+            ui->level_2->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        }
+        lowBattery_blinkStatus = "off";
+    }
+}
+
+void MainWindow::doNothing()
+{
+    qDebug() << "ehllo";
+    batteryLow_blinkTimer->stop();
+    disconnect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(doNothing()));
+}
+
 void MainWindow::power_off()
 {
     if (state == "on") {
         state = "off";
         ui->power_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
     }
+    //Turn the battery display off
     batteryDisplay_off();
+
+    //Turn off all the mode and session lights
+    ui->alpha_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->delta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->theta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->hundredHz_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->twentymin_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->fourtyfivemin_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->userdesignated_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+
     disconnect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_off()));
-    thingsIDK.sendwetEarLobes();
 }
 
 void MainWindow::blink_modeLight(){
