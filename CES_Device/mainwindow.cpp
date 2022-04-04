@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <iostream>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -36,6 +37,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_on()));
     connect(batteryLevelTimer, SIGNAL(timeout()), this, SLOT(batteryDisplay_off()));
     connect(powerOffTimer, SIGNAL(timeout()), this, SLOT(power_off()));
+    connect(ui->connectionButton, SIGNAL(clicked(bool)), this, SLOT(connectionThing()));
+    connect(&thingsIDK, SIGNAL(blink_modeLight()), this, SLOT(blink_modeLight()));
+    connect(&thingsIDK, SIGNAL(displayConnection()), this, SLOT(displayConnection()));
+    connect(&thingsIDK, SIGNAL(softOn()), this, SLOT(softOn()));
+    connect(&thingsIDK, SIGNAL(softOff()), this, SLOT(softOff()));
+    connect(&thingsIDK, SIGNAL(clearDisplay()), this, SLOT(clearDisplay()));
+    connect(&thingsIDK, SIGNAL(wetEarLobes()), this, SLOT(wetEarLobes()));
+    connect(&thingsIDK, SIGNAL(checkConnection()), this, SLOT(connectionThing2()));
 }
 
 MainWindow::~MainWindow()
@@ -118,5 +127,70 @@ void MainWindow::power_off()
     }
     batteryDisplay_off();
     disconnect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_off()));
+    thingsIDK.sendwetEarLobes();
+}
+
+void MainWindow::blink_modeLight(){
+     ui->textEdit->append("blink_modeLight functionality");
+}
+void MainWindow::displayConnection(){
+    ui->textEdit->append("displayConnection functionality");
+}
+
+void MainWindow::softOn(){
+    ui->textEdit->append("soft on functionality");
+}
+
+void MainWindow::softOff(){
+    ui->textEdit->append("soft off functionality");
+}
+
+void MainWindow::clearDisplay(){
+    ui->textEdit->append("clearDisplay functionality");
+}
+void MainWindow::wetEarLobes(){
+    ui->textEdit->append("wetEarLobes functionality");
+}
+
+void MainWindow::connectionThing(){
+    thingsIDK.sendcheckConnection();
+}
+
+void MainWindow::connectionThing2(){
+    ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->level_2->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->level_3->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->level_7->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    ui->textEdit->clear();
+    //ui->textEdit->append("HOLA THERE");
+    if(ui->checkBox->isChecked() && ui->checkBox_2->isChecked() && ui->checkBox_3->isChecked() && ui->checkBox_4->isChecked()){
+        ui->textEdit->append("EXCELLENT CONNECTION");
+        ui->level_1->setStyleSheet("QLabel { background-color: rgb(0, 255, 0); }");
+        ui->level_2->setStyleSheet("QLabel { background-color: rgb(0, 255, 0); }");
+        ui->level_3->setStyleSheet("QLabel { background-color: rgb(0, 255, 0); }");
+    } else if(ui->checkBox->isChecked() && ui->checkBox_2->isChecked() && ui->checkBox_3->isChecked()){
+        ui->textEdit->append("OK CONNECTION - CONSIDER APPLYING MOISTURE TO THE RIGHT EARLOBE");
+        ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
+        ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
+        ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
+    } else if(ui->checkBox->isChecked() && ui->checkBox_2->isChecked() && ui->checkBox_4->isChecked()){
+        ui->textEdit->append("OK CONNECTION - CONSIDER APPLYING MOISTURE TO THE LEFT EARLOBE");
+        ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
+        ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
+        ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
+    } else if(ui->checkBox->isChecked() && ui->checkBox_2->isChecked()){
+        ui->textEdit->append("OK CONNECTION - CONSIDER APPLYING MOISTURE TO BOTH EARLOBES");
+        ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
+        ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
+        ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
+    }else{
+        ui->textEdit->append("NO CONNECTION");
+        ui->level_7->setStyleSheet("QLabel { background-color: rgb(255, 0, 0); }");
+        ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 0, 0); }");
+    }
 }
 
