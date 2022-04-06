@@ -9,6 +9,12 @@
 #include "therapy.h"
 #include "session.h"
 
+//dbmanager
+#include "DBManager.h"
+#include <QString>
+#include <string>
+#include <QDate>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -36,6 +42,10 @@ private:
 
     Therapy* therapy;
 
+    //dbmanager
+    QDate date;
+    DBManager db;
+
 private slots:
     //Sean's functions
     void power_on();
@@ -52,6 +62,10 @@ private slots:
 
     //Erica's functions
     void startSession();
+
+    //dbmanager
+    void recordSession();
+    void viewDatabase();
 
 
 };

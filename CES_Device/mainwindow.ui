@@ -583,6 +583,32 @@
      <string>Wet earlobe (R)</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="recordSessionButton">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>480</y>
+      <width>101</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Record Session</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="viewDatabaseButton">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>480</y>
+      <width>111</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>View Session Logs</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

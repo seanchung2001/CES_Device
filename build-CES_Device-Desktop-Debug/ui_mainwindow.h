@@ -71,6 +71,8 @@ public:
     QCheckBox *checkBox_2;
     QCheckBox *checkBox_3;
     QCheckBox *checkBox_4;
+    QPushButton *recordSessionButton;
+    QPushButton *viewDatabaseButton;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -213,6 +215,12 @@ public:
         checkBox_4 = new QCheckBox(centralwidget);
         checkBox_4->setObjectName(QString::fromUtf8("checkBox_4"));
         checkBox_4->setGeometry(QRect(500, 510, 111, 23));
+        recordSessionButton = new QPushButton(centralwidget);
+        recordSessionButton->setObjectName(QString::fromUtf8("recordSessionButton"));
+        recordSessionButton->setGeometry(QRect(10, 480, 101, 61));
+        viewDatabaseButton = new QPushButton(centralwidget);
+        viewDatabaseButton->setObjectName(QString::fromUtf8("viewDatabaseButton"));
+        viewDatabaseButton->setGeometry(QRect(140, 480, 111, 61));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -273,6 +281,8 @@ public:
         checkBox_2->setText(QApplication::translate("MainWindow", "Right Ear", nullptr));
         checkBox_3->setText(QApplication::translate("MainWindow", "Wet earlobe (L)", nullptr));
         checkBox_4->setText(QApplication::translate("MainWindow", "Wet earlobe (R)", nullptr));
+        recordSessionButton->setText(QApplication::translate("MainWindow", "Record Session", nullptr));
+        viewDatabaseButton->setText(QApplication::translate("MainWindow", "View Session Logs", nullptr));
     } // retranslateUi
 
 };

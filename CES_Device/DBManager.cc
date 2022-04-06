@@ -12,6 +12,7 @@ string DBManager::readLog() {
     string dataLine;
     //entire file
     string fullDataLog;
+    fullDataLog += "Sessions Log:\n";
     //read line by line
     while (getline (DataBase, dataLine)) {
         fullDataLog += dataLine;
@@ -19,6 +20,7 @@ string DBManager::readLog() {
     }
     //close
     DataBase.close();
+
     return fullDataLog;
 }
 //write to database.txt

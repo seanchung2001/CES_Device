@@ -44,6 +44,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&connectionObject, SIGNAL(clearDisplay()), this, SLOT(clearDisplay()));
     connect(ui->select_button, SIGNAL(released()), this, SLOT(startSession()));
 
+    //signal slots for database
+    DBManager db;
+    QDate date;
+    connect(ui->recordSessionButton, SIGNAL(clicked(bool)), this, SLOT(recordSession()));
+    connect(ui->viewDatabaseButton, SIGNAL(clicked(bool)), this, SLOT(viewDatabase()));
 
 }
 
@@ -258,4 +263,28 @@ void MainWindow::startSession(){
     therapy = new Therapy(ALPHA, 3, 3);
     therapy->getTherapy();
     therapy->startSession();
+}
+
+//write to db
+void MainWindow::recordSession()
+{
+    //get date
+    date = QDate::currentDate();
+    QString dateString = date.toString("ddd MMMM d yyyy");
+    //need to get session data as well (not completed yet)
+    //build actual string
+    QString log;
+    log += dateString;
+    log += " temporary session data";
+    //write to database
+    db.writeLog(log.toStdString());
+}
+
+//read db
+void MainWindow::viewDatabase()
+{
+    //just need to read the entire log
+    string entireLog;
+    entireLog = db.readLog();
+    ui->textEdit->append(QString::fromStdString(entireLog));
 }
