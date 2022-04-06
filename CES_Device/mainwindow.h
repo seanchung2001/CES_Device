@@ -34,13 +34,17 @@ private:
     QTimer *batteryLevelTimer;
     QTimer *powerOffTimer;
     QTimer *batteryLow_blinkTimer;
+    QTimer *sessionTimer;
 
     QString state = "off";
     QString lowBattery_blinkStatus = "off";
     connectionTest connectionObject;
     int alternatingNum = 0;
 
+    //Therapy
     Therapy* therapy;
+    int session;
+    int duration;
 
     //dbmanager
     QDate date;
@@ -62,6 +66,9 @@ private slots:
 
     //Erica's functions
     void startSession();
+    void endSession();
+    void incIntensity();
+    void decIntensity();
 
     //dbmanager
     void recordSession();

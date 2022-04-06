@@ -33,6 +33,7 @@ MainWindow::MainWindow(QWidget *parent)
     batteryLevelTimer = new QTimer();
     powerOffTimer = new QTimer();
     batteryLow_blinkTimer = new QTimer();
+    sessionTimer = new QTimer();
 
     //SIGNAL-SLOT
     connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_on()));
@@ -43,6 +44,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&connectionObject, SIGNAL(displayConnection(int)), this, SLOT(displayConnection(int)));
     connect(&connectionObject, SIGNAL(clearDisplay()), this, SLOT(clearDisplay()));
     connect(ui->select_button, SIGNAL(released()), this, SLOT(startSession()));
+    connect(ui->up_button, SIGNAL(released()), this, SLOT(incIntensity()));
+    connect(ui->down_button, SIGNAL(released()), this, SLOT(decIntensity()));
+    connect(sessionTimer, SIGNAL(timeout()), this, SLOT(endSession()));
 
     //signal slots for database
     DBManager db;
@@ -255,15 +259,6 @@ void MainWindow::checkConnection(){
 
 }
 
-void MainWindow::startSession(){
-    //get group/time
-    //get session number
-    //create therapy
-    //start session
-    therapy = new Therapy(ALPHA, 3, 3);
-    therapy->getTherapy();
-    therapy->startSession();
-}
 
 //write to db
 void MainWindow::recordSession()
@@ -287,4 +282,28 @@ void MainWindow::viewDatabase()
     string entireLog;
     entireLog = db.readLog();
     ui->textEdit->append(QString::fromStdString(entireLog));
+}
+
+void MainWindow::startSession(){
+    //get group/time
+    //get session number
+    //create therapy
+    //start session
+    therapy = new Therapy(ALPHA, 3);
+    therapy->softOn();
+    qInfo("start timer");
+    sessionTimer->start(5000);
+}
+
+void MainWindow::endSession(){
+    therapy->softOff();
+    sessionTimer->stop();
+}
+
+void MainWindow::incIntensity(){
+    therapy->incIntensity();
+}
+
+void MainWindow::decIntensity(){
+    therapy->decIntensity();
 }

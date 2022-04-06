@@ -1,14 +1,15 @@
 #include "therapy.h"
 #include <unistd.h>
+#include <QDebug>
 
 #define MAX_INTENSITY 8
 #define DEFAULT_INTENSITY 4
 #define DELAY 5
 
-Therapy::Therapy(Session s, int i, int d)
-    :session(s), intensity(DEFAULT_INTENSITY), duration(d)
+Therapy::Therapy(Session s, int d)
+    :session(s), duration(d)
 {
-
+    intensity = DEFAULT_INTENSITY;
 }
 
 QString Therapy::getTherapy(){
@@ -31,27 +32,33 @@ QString Therapy::getTherapy(){
     return message + " at " + QString::number(this->intensity) + " intensity for " + QString::number(this->duration);
 }
 
-bool Therapy::startSession(){
+void Therapy::startSession(){
     //check if connection test is passed
     delay();
     softOn();
     qInfo("starting therapy");
+
     for (int i = 0; i < duration; i++){
-        sleep(1); //1 min in real time = 1 sec in simulation
+        //sleep(1); //1 min in real time = 1 sec in simulation
+        qInfo("hello");
     }
     softOff();
-    return true;
 }
 
-void Therapy::delay(){
-    qInfo("5 sec delay");
-    for (int i = 0; i < DELAY; i++){
-        sleep(1);
+void Therapy::endSession(){
+    //check if connection test is passed
+    delay();
+    softOn();
+    qInfo("starting therapy");
+
+    for (int i = 0; i < duration; i++){
+        //sleep(1); //1 min in real time = 1 sec in simulation
+        qInfo("hello");
     }
+    softOff();
 }
 
 void Therapy::softOn(){
-    //gradual increase
     qInfo("soft on");
     for (int i = 0; i < intensity; i++){
         sleep(1);
@@ -59,7 +66,6 @@ void Therapy::softOn(){
 }
 
 void Therapy::softOff(){
-    //gradual decrease
     qInfo("soft off");
     for (int i = 0; i < intensity; i++){
         sleep(1);
@@ -68,8 +74,17 @@ void Therapy::softOff(){
 
 void Therapy::incIntensity(){
     if (intensity < MAX_INTENSITY) intensity++;
+    qDebug() << "increase to intensity " << intensity;
 }
 
 void Therapy::decIntensity(){
     if (intensity > 1) intensity--;
+     qDebug() << "decrease to intensity " << intensity;
+}
+
+void Therapy::delay(){
+    qInfo("5 sec delay");
+    for (int i = 0; i < DELAY; i++){
+        sleep(1);
+    }
 }

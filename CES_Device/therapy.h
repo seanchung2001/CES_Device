@@ -7,19 +7,20 @@
 class Therapy
 {
 public:
-    Therapy(Session, int, int);
+    Therapy(Session, int);
     QString getTherapy();
-    bool startSession();
+    void startSession();
+    void endSession();
+    void softOn();
+    void softOff();
+    void incIntensity();
+    void decIntensity();
 
 private:
     Session session;
     int intensity;
     int duration;
     void delay();
-    void softOn();
-    void softOff();
-    void incIntensity();
-    void decIntensity();
 };
 
 #endif // THERAPY_H
