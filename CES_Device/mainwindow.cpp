@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <iostream>
+#include <unistd.h>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -34,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     powerOffTimer = new QTimer();
     batteryLow_blinkTimer = new QTimer();
     sessionTimer = new QTimer();
+    softOnOffTimer = new QTimer();
 
     //SIGNAL-SLOT
     connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_on()));
@@ -118,7 +120,7 @@ void MainWindow::displayBatteryLevel()
 
 void MainWindow::batteryDisplay_off()
 {
-    int tmpBatteryLevel = 2;
+    int tmpBatteryLevel = 1;
     for (int i = 1; i <= 8; i++) {
         if (i == 1) {
             if (i == tmpBatteryLevel) {
@@ -157,7 +159,7 @@ void MainWindow::batteryDisplay_off()
 
 void MainWindow::lowBattery_blink()
 {
-    int tmpBatteryLevel = 2;
+    int tmpBatteryLevel = 1;
     if (lowBattery_blinkStatus == "off") {
         if (tmpBatteryLevel == 1) {
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
@@ -284,19 +286,102 @@ void MainWindow::viewDatabase()
     ui->textEdit->append(QString::fromStdString(entireLog));
 }
 
+void MainWindow::displaySoftOn()
+{
+    if (softOnOffLevel == 1) {
+        ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        softOnOffLevel++;
+    }
+    else if (softOnOffLevel == 2) {
+        ui->level_2->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        softOnOffLevel++;
+    }
+    else if (softOnOffLevel == 3) {
+        ui->level_3->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        softOnOffLevel++;
+    }
+    else if (softOnOffLevel == 4) {
+        ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 178, 0); }");
+        softOnOffLevel++;
+    }
+    else if (softOnOffLevel == 5) {
+        ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 178, 0); }");
+        softOnOffLevel++;
+    }
+    else if (softOnOffLevel == 6) {
+        ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 178, 0); }");
+        softOnOffLevel++;
+    }
+    else if (softOnOffLevel == 7) {
+        ui->level_7->setStyleSheet("QLabel { background-color: rgb(255, 173, 244); }");
+        softOnOffLevel++;
+    }
+    else if (softOnOffLevel == 8) {
+        ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 173, 244); }");
+        disconnect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOn()));
+        softOnOffTimer->stop();
+    }
+}
+
+void MainWindow::displaySoftOff()
+{
+    if (softOnOffLevel == 1) {
+        ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        disconnect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOff()));
+        softOnOffTimer->stop();
+    }
+    else if (softOnOffLevel == 2) {
+        ui->level_2->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        softOnOffLevel--;
+    }
+    else if (softOnOffLevel == 3) {
+        ui->level_3->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        softOnOffLevel--;
+    }
+    else if (softOnOffLevel == 4) {
+        ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        softOnOffLevel--;
+    }
+    else if (softOnOffLevel == 5) {
+        ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        softOnOffLevel--;
+    }
+    else if (softOnOffLevel == 6) {
+        ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        softOnOffLevel--;
+    }
+    else if (softOnOffLevel == 7) {
+        ui->level_7->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        softOnOffLevel--;
+    }
+    else if (softOnOffLevel == 8) {
+        ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        softOnOffLevel--;
+    }
+}
+
 void MainWindow::startSession(){
     //get group/time
     //get session number
     //create therapy
     //start session
     therapy = new Therapy(ALPHA, 3);
+
+    //Soft on
     therapy->softOn();
+    connect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOn()));
+    softOnOffTimer->start(1000);
+
     qInfo("start timer");
-    sessionTimer->start(5000);
+    //This will be filled in with the actual session time
+    sessionTimer->start(11000);
 }
 
 void MainWindow::endSession(){
+    //Soft Off
     therapy->softOff();
+    connect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOff()));
+    softOnOffTimer->start(1000);
     sessionTimer->stop();
 }
 

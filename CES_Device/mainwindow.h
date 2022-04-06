@@ -35,6 +35,7 @@ private:
     QTimer *powerOffTimer;
     QTimer *batteryLow_blinkTimer;
     QTimer *sessionTimer;
+    QTimer *softOnOffTimer = new QTimer();
 
     QString state = "off";
     QString lowBattery_blinkStatus = "off";
@@ -45,6 +46,7 @@ private:
     Therapy* therapy;
     int session;
     int duration;
+    int softOnOffLevel = 1;
 
     //dbmanager
     QDate date;
@@ -69,6 +71,8 @@ private slots:
     void endSession();
     void incIntensity();
     void decIntensity();
+    void displaySoftOn();
+    void displaySoftOff();
 
     //dbmanager
     void recordSession();
