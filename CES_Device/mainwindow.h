@@ -27,7 +27,9 @@ private:
 
     QString state = "off";
     bool firstCommand;
-    connectionTest thingsIDK;
+    connectionTest connectionObject;
+    int alternatingNum = 0;
+
 
 private slots:
     void power_on();
@@ -35,14 +37,13 @@ private slots:
     void batteryDisplay_off();
     void power_off();
 
-    void blink_modeLight();
-    void displayConnection();
-    void softOn();
-    void softOff();
-    void clearDisplay();
-    void wetEarLobes();
-    void connectionThing();
-    void connectionThing2();
+    void blink_modeLight(); // used
+    void displayConnection(int); // used
+    void softOn(); // need to talk with Erica
+    void softOff(); // need to talk with Erica
+    void clearDisplay(); // used but do we need this?
+    void wetEarLobes(); // do we need this?
+    void checkConnection(); // used
 
 
 };

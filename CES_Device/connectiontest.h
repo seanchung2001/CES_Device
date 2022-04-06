@@ -2,6 +2,7 @@
 #define CONNECTIONTEST_H
 
 #include <QObject>
+#include <QTimer>
 
 class connectionTest: public QObject
 {
@@ -10,18 +11,21 @@ public:
     connectionTest();
     //enum LR;
     //enum RE;
+    QTimer *blink;
 
     void sendcheckConnection();
     void sendblink_modeLight();
-    void senddisplayConnection();
+    void senddisplayConnection(int);
     void sendsoftOn();
     void sendsoftOff();
     void sendclearDisplay();
     void sendwetEarLobes();
+    int checkConnection(bool, bool, bool, bool);
+
 signals:
-    void checkConnection();
+    //void checkConnection();
     void blink_modeLight();
-    void displayConnection();
+    void displayConnection(int);
     void softOn();
     void softOff();
     void clearDisplay();

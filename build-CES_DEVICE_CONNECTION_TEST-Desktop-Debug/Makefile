@@ -365,6 +365,7 @@ moc_connectiontest.cpp: ../CES_DEVICE_CONNECTION_TEST/connectiontest.h \
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/FinalProject/CES_Device/build-CES_DEVICE_CONNECTION_TEST-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/FinalProject/CES_Device/CES_DEVICE_CONNECTION_TEST -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../CES_DEVICE_CONNECTION_TEST/connectiontest.h -o moc_connectiontest.cpp
 
 moc_mainwindow.cpp: ../CES_DEVICE_CONNECTION_TEST/mainwindow.h \
+		../CES_DEVICE_CONNECTION_TEST/connectiontest.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
 	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/FinalProject/CES_Device/build-CES_DEVICE_CONNECTION_TEST-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/FinalProject/CES_Device/CES_DEVICE_CONNECTION_TEST -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../CES_DEVICE_CONNECTION_TEST/mainwindow.h -o moc_mainwindow.cpp
@@ -393,10 +394,12 @@ compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_ui
 connectiontest.o: ../CES_DEVICE_CONNECTION_TEST/connectiontest.cpp ../CES_DEVICE_CONNECTION_TEST/connectiontest.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o connectiontest.o ../CES_DEVICE_CONNECTION_TEST/connectiontest.cpp
 
-main.o: ../CES_DEVICE_CONNECTION_TEST/main.cpp ../CES_DEVICE_CONNECTION_TEST/mainwindow.h
+main.o: ../CES_DEVICE_CONNECTION_TEST/main.cpp ../CES_DEVICE_CONNECTION_TEST/mainwindow.h \
+		../CES_DEVICE_CONNECTION_TEST/connectiontest.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../CES_DEVICE_CONNECTION_TEST/main.cpp
 
 mainwindow.o: ../CES_DEVICE_CONNECTION_TEST/mainwindow.cpp ../CES_DEVICE_CONNECTION_TEST/mainwindow.h \
+		../CES_DEVICE_CONNECTION_TEST/connectiontest.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../CES_DEVICE_CONNECTION_TEST/mainwindow.cpp
 

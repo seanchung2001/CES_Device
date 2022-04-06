@@ -57,6 +57,8 @@ public:
     QLabel *bottomleft_label;
     QPushButton *mode_button;
     QLabel *power_light;
+    QLabel *label;
+    QLabel *label_2;
     QTextEdit *textEdit;
     QPushButton *connectionButton;
     QCheckBox *checkBox;
@@ -163,6 +165,12 @@ public:
         power_light = new QLabel(groupBox);
         power_light->setObjectName(QString::fromUtf8("power_light"));
         power_light->setGeometry(QRect(270, 280, 31, 16));
+        label = new QLabel(groupBox);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(230, 40, 21, 16));
+        label_2 = new QLabel(groupBox);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setGeometry(QRect(260, 40, 21, 16));
         textEdit = new QTextEdit(centralwidget);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
         textEdit->setGeometry(QRect(453, 169, 311, 271));
@@ -228,6 +236,8 @@ public:
         bottomleft_label->setText(QString());
         mode_button->setText(QApplication::translate("MainWindow", "MODE", nullptr));
         power_light->setText(QString());
+        label->setText(QString());
+        label_2->setText(QString());
         connectionButton->setText(QApplication::translate("MainWindow", "Connection", nullptr));
         checkBox->setText(QApplication::translate("MainWindow", "Left Ear", nullptr));
         checkBox_2->setText(QApplication::translate("MainWindow", "Right Ear", nullptr));
