@@ -37,7 +37,7 @@ MOVE          = mv -f
 TAR           = tar -cf
 COMPRESS      = gzip -9f
 DISTNAME      = CES_Device1.0.0
-DISTDIR = /home/student/FinalProject/CES_Device/build-CES_Device-Desktop-Debug/.tmp/CES_Device1.0.0
+DISTDIR = /home/student/Documents/TeamProject/CES_Device/build-CES_Device-Desktop-Debug/.tmp/CES_Device1.0.0
 LINK          = g++
 LFLAGS        = 
 LIBS          = $(SUBLIBS) /usr/lib/x86_64-linux-gnu/libQt5Widgets.so /usr/lib/x86_64-linux-gnu/libQt5Gui.so /usr/lib/x86_64-linux-gnu/libQt5Core.so /usr/lib/x86_64-linux-gnu/libGL.so -lpthread   
@@ -54,12 +54,14 @@ OBJECTS_DIR   = ./
 
 SOURCES       = ../CES_Device/connectiontest.cpp \
 		../CES_Device/main.cpp \
-		../CES_Device/mainwindow.cpp qrc_CES.cpp \
+		../CES_Device/mainwindow.cpp \
+		../CES_Device/therapy.cpp qrc_CES.cpp \
 		moc_connectiontest.cpp \
 		moc_mainwindow.cpp
 OBJECTS       = connectiontest.o \
 		main.o \
 		mainwindow.o \
+		therapy.o \
 		qrc_CES.o \
 		moc_connectiontest.o \
 		moc_mainwindow.o
@@ -141,9 +143,12 @@ DIST          = ../CES_Device/labels/alpha.svg \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
 		../CES_Device/CES_Device.pro ../CES_Device/connectiontest.h \
-		../CES_Device/mainwindow.h ../CES_Device/connectiontest.cpp \
+		../CES_Device/mainwindow.h \
+		../CES_Device/session.h \
+		../CES_Device/therapy.h ../CES_Device/connectiontest.cpp \
 		../CES_Device/main.cpp \
-		../CES_Device/mainwindow.cpp
+		../CES_Device/mainwindow.cpp \
+		../CES_Device/therapy.cpp
 QMAKE_TARGET  = CES_Device
 DESTDIR       = 
 TARGET        = CES_Device
@@ -328,8 +333,8 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../CES_Device/CES.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../CES_Device/connectiontest.h ../CES_Device/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../CES_Device/connectiontest.cpp ../CES_Device/main.cpp ../CES_Device/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../CES_Device/connectiontest.h ../CES_Device/mainwindow.h ../CES_Device/session.h ../CES_Device/therapy.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../CES_Device/connectiontest.cpp ../CES_Device/main.cpp ../CES_Device/mainwindow.cpp ../CES_Device/therapy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../CES_Device/mainwindow.ui $(DISTDIR)/
 
 
@@ -383,13 +388,15 @@ compiler_moc_header_clean:
 moc_connectiontest.cpp: ../CES_Device/connectiontest.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/FinalProject/CES_Device/build-CES_Device-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/FinalProject/CES_Device/CES_Device -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../CES_Device/connectiontest.h -o moc_connectiontest.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Documents/TeamProject/CES_Device/build-CES_Device-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Documents/TeamProject/CES_Device/CES_Device -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../CES_Device/connectiontest.h -o moc_connectiontest.cpp
 
 moc_mainwindow.cpp: ../CES_Device/mainwindow.h \
 		../CES_Device/connectiontest.h \
+		../CES_Device/therapy.h \
+		../CES_Device/session.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
-	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/FinalProject/CES_Device/build-CES_Device-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/FinalProject/CES_Device/CES_Device -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../CES_Device/mainwindow.h -o moc_mainwindow.cpp
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/student/Documents/TeamProject/CES_Device/build-CES_Device-Desktop-Debug/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/student/Documents/TeamProject/CES_Device/CES_Device -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include ../CES_Device/mainwindow.h -o moc_mainwindow.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -416,13 +423,21 @@ connectiontest.o: ../CES_Device/connectiontest.cpp ../CES_Device/connectiontest.
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o connectiontest.o ../CES_Device/connectiontest.cpp
 
 main.o: ../CES_Device/main.cpp ../CES_Device/mainwindow.h \
-		../CES_Device/connectiontest.h
+		../CES_Device/connectiontest.h \
+		../CES_Device/therapy.h \
+		../CES_Device/session.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../CES_Device/main.cpp
 
 mainwindow.o: ../CES_Device/mainwindow.cpp ../CES_Device/mainwindow.h \
 		../CES_Device/connectiontest.h \
+		../CES_Device/therapy.h \
+		../CES_Device/session.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../CES_Device/mainwindow.cpp
+
+therapy.o: ../CES_Device/therapy.cpp ../CES_Device/therapy.h \
+		../CES_Device/session.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o therapy.o ../CES_Device/therapy.cpp
 
 qrc_CES.o: qrc_CES.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o qrc_CES.o qrc_CES.cpp

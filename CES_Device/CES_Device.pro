@@ -18,11 +18,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     connectiontest.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    therapy.cpp
 
 HEADERS += \
     connectiontest.h \
-    mainwindow.h
+    mainwindow.h \
+    session.h \
+    therapy.h
 
 FORMS += \
     mainwindow.ui

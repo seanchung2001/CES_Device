@@ -6,6 +6,8 @@
 #include <QPixmap>
 #include <QTimer>
 #include "connectiontest.h"
+//#include "therapy.h"
+#include "session.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
