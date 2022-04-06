@@ -31,7 +31,8 @@ private:
 
     QString state = "off";
     QString lowBattery_blinkStatus = "off";
-    connectionTest thingsIDK;
+    connectionTest connectionObject;
+    int alternatingNum = 0;
 
     Therapy* therapy;
 
@@ -45,13 +46,9 @@ private slots:
 
     //Israels Functions
     void blink_modeLight();
-    void displayConnection();
-    void softOn();
-    void softOff();
+    void displayConnection(int);
     void clearDisplay();
-    void wetEarLobes();
-    void connectionThing();
-    void connectionThing2();
+    void checkConnection();
 
     //Erica's functions
     void startSession();

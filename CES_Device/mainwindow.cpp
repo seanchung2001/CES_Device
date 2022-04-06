@@ -38,14 +38,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_on()));
     connect(batteryLevelTimer, SIGNAL(timeout()), this, SLOT(batteryDisplay_off()));
     connect(powerOffTimer, SIGNAL(timeout()), this, SLOT(power_off()));
-    connect(ui->connectionButton, SIGNAL(clicked(bool)), this, SLOT(connectionThing()));
-    connect(&thingsIDK, SIGNAL(blink_modeLight()), this, SLOT(blink_modeLight()));
-    connect(&thingsIDK, SIGNAL(displayConnection()), this, SLOT(displayConnection()));
-    connect(&thingsIDK, SIGNAL(softOn()), this, SLOT(softOn()));
-    connect(&thingsIDK, SIGNAL(softOff()), this, SLOT(softOff()));
-    connect(&thingsIDK, SIGNAL(clearDisplay()), this, SLOT(clearDisplay()));
-    connect(&thingsIDK, SIGNAL(wetEarLobes()), this, SLOT(wetEarLobes()));
-    connect(&thingsIDK, SIGNAL(checkConnection()), this, SLOT(connectionThing2()));
+    connect(ui->connectionButton, SIGNAL(clicked(bool)), this, SLOT(checkConnection()));
+    connect(&connectionObject, SIGNAL(blink_modeLight()), this, SLOT(blink_modeLight()));
+    connect(&connectionObject, SIGNAL(displayConnection(int)), this, SLOT(displayConnection(int)));
+    connect(&connectionObject, SIGNAL(clearDisplay()), this, SLOT(clearDisplay()));
     connect(ui->select_button, SIGNAL(released()), this, SLOT(startSession()));
 
 
@@ -197,58 +193,31 @@ void MainWindow::power_off()
 }
 
 void MainWindow::blink_modeLight(){
-     ui->textEdit->append("blink_modeLight functionality");
+     if (alternatingNum == 0){
+         ui->label->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+         alternatingNum = 1;
+     }else{
+         ui->label->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+         alternatingNum = 0;
+     }
 }
-void MainWindow::displayConnection(){
-    ui->textEdit->append("displayConnection functionality");
-}
-
-void MainWindow::softOn(){
-    ui->textEdit->append("soft on functionality");
-}
-
-void MainWindow::softOff(){
-    ui->textEdit->append("soft off functionality");
-}
-
-void MainWindow::clearDisplay(){
-    ui->textEdit->append("clearDisplay functionality");
-}
-void MainWindow::wetEarLobes(){
-    ui->textEdit->append("wetEarLobes functionality");
-}
-
-void MainWindow::connectionThing(){
-    thingsIDK.sendcheckConnection();
-}
-
-void MainWindow::connectionThing2(){
-    ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
-    ui->level_2->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
-    ui->level_3->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
-    ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
-    ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
-    ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
-    ui->level_7->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
-    ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
-    ui->textEdit->clear();
-    //ui->textEdit->append("HOLA THERE");
-    if(ui->checkBox->isChecked() && ui->checkBox_2->isChecked() && ui->checkBox_3->isChecked() && ui->checkBox_4->isChecked()){
+void MainWindow::displayConnection(int x){
+    if (x == 0){
         ui->textEdit->append("EXCELLENT CONNECTION");
         ui->level_1->setStyleSheet("QLabel { background-color: rgb(0, 255, 0); }");
         ui->level_2->setStyleSheet("QLabel { background-color: rgb(0, 255, 0); }");
         ui->level_3->setStyleSheet("QLabel { background-color: rgb(0, 255, 0); }");
-    } else if(ui->checkBox->isChecked() && ui->checkBox_2->isChecked() && ui->checkBox_3->isChecked()){
+    } else if (x == 1){
         ui->textEdit->append("OK CONNECTION - CONSIDER APPLYING MOISTURE TO THE RIGHT EARLOBE");
         ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
         ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
         ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
-    } else if(ui->checkBox->isChecked() && ui->checkBox_2->isChecked() && ui->checkBox_4->isChecked()){
+    }else if (x == 2){
         ui->textEdit->append("OK CONNECTION - CONSIDER APPLYING MOISTURE TO THE LEFT EARLOBE");
         ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
         ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
         ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
-    } else if(ui->checkBox->isChecked() && ui->checkBox_2->isChecked()){
+    }else if (x == 3){
         ui->textEdit->append("OK CONNECTION - CONSIDER APPLYING MOISTURE TO BOTH EARLOBES");
         ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
         ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 255, 0); }");
@@ -258,6 +227,27 @@ void MainWindow::connectionThing2(){
         ui->level_7->setStyleSheet("QLabel { background-color: rgb(255, 0, 0); }");
         ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 0, 0); }");
     }
+}
+
+void MainWindow::clearDisplay(){
+    ui->textEdit->clear();
+}
+void MainWindow::checkConnection(){
+    if (state == "on"){
+        ui->level_1->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+        ui->level_2->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+        ui->level_3->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+        ui->level_4->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+        ui->level_5->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+        ui->level_6->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+        ui->level_7->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+        ui->level_8->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+
+        connectionObject.sendclearDisplay();
+        connectionObject.sendblink_modeLight();
+        connectionObject.senddisplayConnection(connectionObject.checkConnection(ui->checkBox->isChecked(), ui->checkBox_2->isChecked(), ui->checkBox_3->isChecked(), ui->checkBox_4->isChecked()));
+    }
+
 }
 
 void MainWindow::startSession(){

@@ -64,6 +64,7 @@ public:
     QLabel *delta_light;
     QLabel *theta_light;
     QLabel *alpha_light;
+    QLabel *label;
     QTextEdit *textEdit;
     QPushButton *connectionButton;
     QCheckBox *checkBox;
@@ -191,6 +192,9 @@ public:
         alpha_light = new QLabel(groupBox);
         alpha_light->setObjectName(QString::fromUtf8("alpha_light"));
         alpha_light->setGeometry(QRect(50, 120, 21, 17));
+        label = new QLabel(groupBox);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setGeometry(QRect(230, 40, 16, 16));
         textEdit = new QTextEdit(centralwidget);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
         textEdit->setGeometry(QRect(453, 169, 311, 271));
@@ -263,6 +267,7 @@ public:
         delta_light->setText(QString());
         theta_light->setText(QString());
         alpha_light->setText(QString());
+        label->setText(QString());
         connectionButton->setText(QApplication::translate("MainWindow", "Connection", nullptr));
         checkBox->setText(QApplication::translate("MainWindow", "Left Ear", nullptr));
         checkBox_2->setText(QApplication::translate("MainWindow", "Right Ear", nullptr));
