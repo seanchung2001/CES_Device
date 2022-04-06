@@ -6,6 +6,6 @@ enum Session{
     DELTA,
     THETA,
     HZ
-}
+};
 
 #endif // SESSION_H

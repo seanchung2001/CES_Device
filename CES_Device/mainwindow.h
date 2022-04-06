@@ -6,7 +6,7 @@
 #include <QPixmap>
 #include <QTimer>
 #include "connectiontest.h"
-//#include "therapy.h"
+#include "therapy.h"
 #include "session.h"
 
 QT_BEGIN_NAMESPACE
@@ -33,6 +33,8 @@ private:
     QString lowBattery_blinkStatus = "off";
     connectionTest thingsIDK;
 
+    Therapy* therapy;
+
 private slots:
     //Sean's functions
     void power_on();
@@ -50,6 +52,9 @@ private slots:
     void wetEarLobes();
     void connectionThing();
     void connectionThing2();
+
+    //Erica's functions
+    void startSession();
 
 
 };

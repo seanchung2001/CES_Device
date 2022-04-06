@@ -46,6 +46,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&thingsIDK, SIGNAL(clearDisplay()), this, SLOT(clearDisplay()));
     connect(&thingsIDK, SIGNAL(wetEarLobes()), this, SLOT(wetEarLobes()));
     connect(&thingsIDK, SIGNAL(checkConnection()), this, SLOT(connectionThing2()));
+    connect(ui->select_button, SIGNAL(released()), this, SLOT(startSession()));
+
+
 }
 
 MainWindow::~MainWindow()
@@ -257,3 +260,12 @@ void MainWindow::connectionThing2(){
     }
 }
 
+void MainWindow::startSession(){
+    //get group/time
+    //get session number
+    //create therapy
+    //start session
+    therapy = new Therapy(ALPHA, 3, 3);
+    therapy->getTherapy();
+    therapy->startSession();
+}
