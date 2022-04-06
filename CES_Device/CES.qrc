@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/labels">
+        <file>labels/alpha.png</file>
+        <file>labels/theta.png</file>
+        <file>labels/delta.png</file>
+        <file>labels/100hz.svg</file>
+        <file>labels/twentymin.png</file>
+        <file>labels/fourtyfive.png</file>
+        <file>labels/userdesignated.png</file>
+        <file>labels/oasislogo.png</file>
+        <file>labels/topleftlogo.png</file>
+        <file>labels/bottomleftlogo.png</file>
+    </qresource>
+</RCC>
