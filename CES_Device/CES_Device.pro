@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     DBManager.cc \
+    battery.cpp \
     connectiontest.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -24,6 +25,7 @@ SOURCES += \
 
 HEADERS += \
     DBManager.h \
+    battery.h \
     connectiontest.h \
     mainwindow.h \
     session.h \
