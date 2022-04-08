@@ -4,7 +4,7 @@
 
 #define MAX_INTENSITY 8
 #define DEFAULT_INTENSITY 4
-#define DELAY 5
+
 
 Therapy::Therapy(Session s, int d)
     :session(s), duration(d)
@@ -33,29 +33,27 @@ QString Therapy::getTherapy(){
 }
 
 void Therapy::startSession(){
-    //check if connection test is passed
-    delay();
-    softOn();
-    qInfo("starting therapy");
+//    //check if connection test is passed
+//    softOn();
+//    qInfo("starting therapy");
 
-    for (int i = 0; i < duration; i++){
-        //sleep(1); //1 min in real time = 1 sec in simulation
-        qInfo("hello");
-    }
-    softOff();
+//    for (int i = 0; i < duration; i++){
+//        //sleep(1); //1 min in real time = 1 sec in simulation
+//        qInfo("hello");
+//    }
+//    softOff();
 }
 
 void Therapy::endSession(){
-    //check if connection test is passed
-    delay();
-    softOn();
-    qInfo("starting therapy");
+//    //check if connection test is passed
+//    softOn();
+//    qInfo("starting therapy");
 
-    for (int i = 0; i < duration; i++){
-        //sleep(1); //1 min in real time = 1 sec in simulation
-        qInfo("hello");
-    }
-    softOff();
+//    for (int i = 0; i < duration; i++){
+//        //sleep(1); //1 min in real time = 1 sec in simulation
+//        qInfo("hello");
+//    }
+//    softOff();
 }
 
 void Therapy::softOn(){
@@ -82,9 +80,3 @@ void Therapy::decIntensity(){
      qDebug() << "decrease to intensity " << intensity;
 }
 
-void Therapy::delay(){
-    qInfo("5 sec delay");
-    for (int i = 0; i < DELAY; i++){
-        sleep(1);
-    }
-}

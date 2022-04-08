@@ -44,7 +44,7 @@ private:
     int alternatingNum = 0;
 
     //Therapy
-    Therapy* therapy;
+    Therapy* therapy = NULL;
     int session;
     int duration;
     int softOnOffLevel = 1;

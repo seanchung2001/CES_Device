@@ -48,7 +48,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->select_button, SIGNAL(released()), this, SLOT(startSession()));
     connect(ui->up_button, SIGNAL(released()), this, SLOT(incIntensity()));
     connect(ui->down_button, SIGNAL(released()), this, SLOT(decIntensity()));
-    connect(sessionTimer, SIGNAL(timeout()), this, SLOT(endSession()));
 
     //signal slots for database
     DBManager db;
@@ -364,10 +363,9 @@ void MainWindow::displaySoftOff()
 }
 
 void MainWindow::startSession(){
-    //get group/time
-    //get session number
-    //create therapy
-    //start session
+    if(state == "off") return;
+
+    //get time/session and create therapy
     therapy = new Therapy(ALPHA, 3);
 
     //Soft on
@@ -375,25 +373,30 @@ void MainWindow::startSession(){
     connect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOn()));
     softOnOffTimer->start(1000);
 
-    qInfo("start timer");
-    //This will be filled in with the actual session time
+    //begin session timer
+    connect(sessionTimer, SIGNAL(timeout()), this, SLOT(endSession()));
     sessionTimer->start(11000);
+    qInfo("start timer");
 }
 
 void MainWindow::endSession(){
+    //end timer
+    sessionTimer->stop();
+    qInfo("end timer");
+
     //Soft Off
     therapy->softOff();
     connect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOff()));
     softOnOffTimer->start(1000);
 
-    //This timer will stop before the displaySoftOff function turns off all levels. If this is an issue you could put it inside of displaySoftOff
-    sessionTimer->stop();
+    //turn off device
+
 }
 
 void MainWindow::incIntensity(){
-    therapy->incIntensity();
+   if(therapy) therapy->incIntensity();
 }
 
 void MainWindow::decIntensity(){
-    therapy->decIntensity();
+    if(therapy) therapy->decIntensity();
 }

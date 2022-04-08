@@ -20,7 +20,6 @@ private:
     Session session;
     int intensity;
     int duration;
-    void delay();
 };
 
 #endif // THERAPY_H
