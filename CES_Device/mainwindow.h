@@ -8,6 +8,7 @@
 #include "connectiontest.h"
 #include "therapy.h"
 #include "session.h"
+#include "duration.h"
 #include "battery.h"
 
 //dbmanager
@@ -45,8 +46,8 @@ private:
 
     //Therapy
     Therapy* therapy = NULL;
-    int session;
-    int duration;
+    int session = 0;
+    int duration = 0;
     int softOnOffLevel = 1;
 
     //dbmanager
@@ -72,8 +73,11 @@ private slots:
     void checkConnection();
 
     //Erica's functions
-    void startSession();
-    void endSession();
+    int getDuration();
+    void setDuration();
+    void setSession();
+    void startTherapy();
+    void endTherapy();
     void incIntensity();
     void decIntensity();
     void displaySoftOn();

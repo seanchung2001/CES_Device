@@ -45,9 +45,11 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&connectionObject, SIGNAL(blink_modeLight()), this, SLOT(blink_modeLight()));
     connect(&connectionObject, SIGNAL(displayConnection(int)), this, SLOT(displayConnection(int)));
     connect(&connectionObject, SIGNAL(clearDisplay()), this, SLOT(clearDisplay()));
-    connect(ui->select_button, SIGNAL(released()), this, SLOT(startSession()));
+    connect(ui->select_button, SIGNAL(released()), this, SLOT(startTherapy()));
     connect(ui->up_button, SIGNAL(released()), this, SLOT(incIntensity()));
     connect(ui->down_button, SIGNAL(released()), this, SLOT(decIntensity()));
+    connect(ui->setDuration_button, SIGNAL(released()), this, SLOT(setDuration()));
+    connect(ui->setSession_button, SIGNAL(released()), this, SLOT(setSession()));
 
     //signal slots for database
     DBManager db;
@@ -72,8 +74,18 @@ void MainWindow::power_on()
         powerOffTimer->start(200000);
         ui->power_light->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         displayBatteryLevel();
+
+        //set default therapy settings
+        ui->alpha_light->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        ui->delta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->theta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->hundredHz_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->twentymin_light->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        ui->fourtyfivemin_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->userdesignated_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
     }
     connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_off()));
+
 }
 
 void MainWindow::displayBatteryLevel()
@@ -362,24 +374,98 @@ void MainWindow::displaySoftOff()
     }
 }
 
-void MainWindow::startSession(){
+int MainWindow::getDuration(){      //in minutes instead of enum
+    switch (duration){
+    case TWENTY:
+        return 20;
+    case FORTYFIVE:
+        return 45;
+    case CUSTOM:
+        return 60;  //should be changed; user input needed
+    default:
+        return 0;
+    }
+}
+
+void MainWindow::setDuration(){
+    if(state == "off") return;
+    //go to next session
+    duration = (duration+1)%3;
+    //update light
+    switch (duration){
+    case TWENTY:
+        ui->twentymin_light->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        ui->fourtyfivemin_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->userdesignated_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        break;
+    case FORTYFIVE:
+        ui->twentymin_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->fourtyfivemin_light->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        ui->userdesignated_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        break;
+    case CUSTOM:
+        ui->twentymin_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->fourtyfivemin_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->userdesignated_light->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        break;
+    }
+}
+
+void MainWindow::setSession(){
+    if(state == "off") return;
+    //go to next session
+    session = (session+1)%4;
+    //update light
+    switch (session){
+    case ALPHA:
+        ui->alpha_light->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        ui->theta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->delta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->hundredHz_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        break;
+    case THETA:
+        ui->alpha_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->theta_light->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        ui->delta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->hundredHz_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        break;
+    case DELTA:
+        ui->alpha_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->theta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->delta_light->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        ui->hundredHz_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        break;
+    case HZ:
+        ui->alpha_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->theta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->delta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+        ui->hundredHz_light->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+        break;
+    }
+}
+
+void MainWindow::startTherapy(){
     if(state == "off") return;
 
-    //get time/session and create therapy
-    therapy = new Therapy(ALPHA, 3);
+    //connection test
+    if(connectionObject.checkConnection(ui->checkBox->isChecked(), ui->checkBox_2->isChecked(), ui->checkBox_3->isChecked(), ui->checkBox_4->isChecked()) == 4) return;
+
+    //create therapy
+    therapy = new Therapy((Session)session, getDuration());
+    qDebug() << therapy->getTherapy();
 
     //Soft on
     therapy->softOn();
     connect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOn()));
-    softOnOffTimer->start(1000);
+    softOnOffTimer->start(SOFT_TIME);
 
     //begin session timer
-    connect(sessionTimer, SIGNAL(timeout()), this, SLOT(endSession()));
-    sessionTimer->start(11000);
+    connect(sessionTimer, SIGNAL(timeout()), this, SLOT(endTherapy()));
+    sessionTimer->start(getDuration()*1000); //minutes  = secs as msecs
     qInfo("start timer");
 }
 
-void MainWindow::endSession(){
+void MainWindow::endTherapy(){
     //end timer
     sessionTimer->stop();
     qInfo("end timer");
@@ -387,10 +473,10 @@ void MainWindow::endSession(){
     //Soft Off
     therapy->softOff();
     connect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOff()));
-    softOnOffTimer->start(1000);
+    softOnOffTimer->start(SOFT_TIME);
 
     //turn off device
-
+    power_off();
 }
 
 void MainWindow::incIntensity(){

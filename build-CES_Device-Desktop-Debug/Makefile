@@ -149,6 +149,7 @@ DIST          = ../CES_Device/labels/alpha.svg \
 		../CES_Device/CES_Device.pro ../CES_Device/DBManager.h \
 		../CES_Device/battery.h \
 		../CES_Device/connectiontest.h \
+		../CES_Device/duration.h \
 		../CES_Device/mainwindow.h \
 		../CES_Device/session.h \
 		../CES_Device/therapy.h ../CES_Device/DBManager.cc \
@@ -341,7 +342,7 @@ distdir: FORCE
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents ../CES_Device/CES.qrc $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents ../CES_Device/DBManager.h ../CES_Device/battery.h ../CES_Device/connectiontest.h ../CES_Device/mainwindow.h ../CES_Device/session.h ../CES_Device/therapy.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../CES_Device/DBManager.h ../CES_Device/battery.h ../CES_Device/connectiontest.h ../CES_Device/duration.h ../CES_Device/mainwindow.h ../CES_Device/session.h ../CES_Device/therapy.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../CES_Device/DBManager.cc ../CES_Device/battery.cpp ../CES_Device/connectiontest.cpp ../CES_Device/main.cpp ../CES_Device/mainwindow.cpp ../CES_Device/therapy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../CES_Device/mainwindow.ui $(DISTDIR)/
 
@@ -402,6 +403,7 @@ moc_mainwindow.cpp: ../CES_Device/mainwindow.h \
 		../CES_Device/connectiontest.h \
 		../CES_Device/therapy.h \
 		../CES_Device/session.h \
+		../CES_Device/duration.h \
 		../CES_Device/battery.h \
 		../CES_Device/DBManager.h \
 		moc_predefs.h \
@@ -442,6 +444,7 @@ main.o: ../CES_Device/main.cpp ../CES_Device/mainwindow.h \
 		../CES_Device/connectiontest.h \
 		../CES_Device/therapy.h \
 		../CES_Device/session.h \
+		../CES_Device/duration.h \
 		../CES_Device/battery.h \
 		../CES_Device/DBManager.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../CES_Device/main.cpp
@@ -450,6 +453,7 @@ mainwindow.o: ../CES_Device/mainwindow.cpp ../CES_Device/mainwindow.h \
 		../CES_Device/connectiontest.h \
 		../CES_Device/therapy.h \
 		../CES_Device/session.h \
+		../CES_Device/duration.h \
 		../CES_Device/battery.h \
 		../CES_Device/DBManager.h \
 		ui_mainwindow.h

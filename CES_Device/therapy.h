@@ -4,6 +4,8 @@
 #include <QString>
 #include "session.h"
 
+#define SOFT_TIME 5000 //ms
+
 class Therapy
 {
 public:

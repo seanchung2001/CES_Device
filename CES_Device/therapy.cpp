@@ -29,7 +29,7 @@ QString Therapy::getTherapy(){
         break;
     }
 
-    return message + " at " + QString::number(this->intensity) + " intensity for " + QString::number(this->duration);
+    return message + " session at " + QString::number(this->intensity) + " intensity for " + QString::number(this->duration) + " minutes";
 }
 
 void Therapy::startSession(){

@@ -27,6 +27,7 @@ HEADERS += \
     DBManager.h \
     battery.h \
     connectiontest.h \
+    duration.h \
     mainwindow.h \
     session.h \
     therapy.h

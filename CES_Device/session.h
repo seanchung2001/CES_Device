@@ -3,8 +3,8 @@
 
 enum Session{
     ALPHA,
-    DELTA,
     THETA,
+    DELTA,
     HZ
 };
 
