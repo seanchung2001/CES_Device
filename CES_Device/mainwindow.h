@@ -55,6 +55,7 @@ private:
 
     //Battery
     battery *deviceBattery;
+    bool displayingBattery = false;
 
 private slots:
     //Sean's functions

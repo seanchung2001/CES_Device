@@ -79,6 +79,7 @@ void MainWindow::power_on()
 
 void MainWindow::displayBatteryLevel()
 {
+    displayingBattery = true;
     for (int i = 1; i <= deviceBattery->getBatteryLevel(); i++) {
         if (i == 1) {
             if (i == deviceBattery->getBatteryLevel()) {
@@ -129,6 +130,7 @@ void MainWindow::batteryDisplay_off()
                 disconnect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
             }
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+            displayingBattery = false;
         }
         else if (i == 2) {
             if (i == deviceBattery->getBatteryLevel()) {
@@ -136,6 +138,7 @@ void MainWindow::batteryDisplay_off()
                 disconnect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
             }
             ui->level_2->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+            displayingBattery = false;
         }
         else if (i == 3) {
             ui->level_3->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
@@ -244,7 +247,7 @@ void MainWindow::clearDisplay(){
     ui->textEdit->clear();
 }
 void MainWindow::checkConnection(){
-    if (state == "on"){
+    if (state == "on" && displayingBattery == false){
         ui->level_1->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
         ui->level_2->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
         ui->level_3->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
