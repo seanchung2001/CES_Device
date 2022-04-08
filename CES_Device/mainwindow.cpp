@@ -56,6 +56,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->recordSessionButton, SIGNAL(clicked(bool)), this, SLOT(recordSession()));
     connect(ui->viewDatabaseButton, SIGNAL(clicked(bool)), this, SLOT(viewDatabase()));
 
+    //Create Battery Instance
+    deviceBattery = new battery();
+
 }
 
 MainWindow::~MainWindow()
@@ -76,20 +79,19 @@ void MainWindow::power_on()
 
 void MainWindow::displayBatteryLevel()
 {
-    int tmpBatterylevel = 2;
-    for (int i = 1; i <= tmpBatterylevel; i++) {
+    for (int i = 1; i <= deviceBattery->getBatteryLevel(); i++) {
         if (i == 1) {
-            if (i == tmpBatterylevel) {
+            if (i == deviceBattery->getBatteryLevel()) {
                 connect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
                 batteryLow_blinkTimer->start(1000);
                 continue;
             }
-            if (tmpBatterylevel != 2) {
+            if (deviceBattery->getBatteryLevel() != 2) {
                 ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
             }
         }
         else if (i == 2) {
-            if (i == tmpBatterylevel) {
+            if (i == deviceBattery->getBatteryLevel()) {
                 connect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
                 batteryLow_blinkTimer->start(1000);
                 continue;
@@ -120,17 +122,16 @@ void MainWindow::displayBatteryLevel()
 
 void MainWindow::batteryDisplay_off()
 {
-    int tmpBatteryLevel = 1;
     for (int i = 1; i <= 8; i++) {
         if (i == 1) {
-            if (i == tmpBatteryLevel) {
+            if (i == deviceBattery->getBatteryLevel()) {
                 batteryLow_blinkTimer->stop();
                 disconnect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
             }
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
         else if (i == 2) {
-            if (i == tmpBatteryLevel) {
+            if (i == deviceBattery->getBatteryLevel()) {
                 batteryLow_blinkTimer->stop();
                 disconnect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
             }
@@ -159,22 +160,21 @@ void MainWindow::batteryDisplay_off()
 
 void MainWindow::lowBattery_blink()
 {
-    int tmpBatteryLevel = 1;
     if (lowBattery_blinkStatus == "off") {
-        if (tmpBatteryLevel == 1) {
+        if (deviceBattery->getBatteryLevel() == 1) {
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
-        else if (tmpBatteryLevel == 2) {
+        else if (deviceBattery->getBatteryLevel() == 2) {
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
             ui->level_2->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
         lowBattery_blinkStatus = "on";
     }
     else {
-        if (tmpBatteryLevel == 1) {
+        if (deviceBattery->getBatteryLevel() == 1) {
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
-        else if (tmpBatteryLevel == 2) {
+        else if (deviceBattery->getBatteryLevel() == 2) {
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
             ui->level_2->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
@@ -382,6 +382,8 @@ void MainWindow::endSession(){
     therapy->softOff();
     connect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOff()));
     softOnOffTimer->start(1000);
+
+    //This timer will stop before the displaySoftOff function turns off all levels. If this is an issue you could put it inside of displaySoftOff
     sessionTimer->stop();
 }
 

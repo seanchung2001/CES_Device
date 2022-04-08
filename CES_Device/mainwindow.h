@@ -8,6 +8,7 @@
 #include "connectiontest.h"
 #include "therapy.h"
 #include "session.h"
+#include "battery.h"
 
 //dbmanager
 #include "DBManager.h"
@@ -51,6 +52,9 @@ private:
     //dbmanager
     QDate date;
     DBManager db;
+
+    //Battery
+    battery *deviceBattery;
 
 private slots:
     //Sean's functions
