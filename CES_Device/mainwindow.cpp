@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->down_button, SIGNAL(released()), this, SLOT(decIntensity()));
     connect(ui->setDuration_button, SIGNAL(released()), this, SLOT(setDuration()));
     connect(ui->setSession_button, SIGNAL(released()), this, SLOT(setSession()));
+    connect(ui->replace_battery_button, SIGNAL(clicked(bool)), this, SLOT(replaceBattery()));
 
     //signal slots for database
     DBManager db;
@@ -91,18 +92,20 @@ void MainWindow::power_on()
 void MainWindow::displayBatteryLevel()
 {
     displayingBattery = true;
-    for (int i = 1; i <= deviceBattery->getBatteryLevel(); i++) {
-        if (i == 1) {
+    qDebug() << "Displaying battery level...";
+    for (int i = 0; i <= deviceBattery->getBatteryLevel(); i++) {
+        if (i >= 1 && i <= 199) {
             if (i == deviceBattery->getBatteryLevel()) {
                 connect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
                 batteryLow_blinkTimer->start(1000);
                 continue;
             }
-            if (deviceBattery->getBatteryLevel() != 2) {
-                ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+            if (deviceBattery->getBatteryLevel() >= 200 && deviceBattery->getBatteryLevel() <= 299) {
+                continue;
             }
+            ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
-        else if (i == 2) {
+        else if (i >= 200 && i <= 299) {
             if (i == deviceBattery->getBatteryLevel()) {
                 connect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
                 batteryLow_blinkTimer->start(1000);
@@ -110,22 +113,22 @@ void MainWindow::displayBatteryLevel()
             }
             ui->level_2->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
-        else if (i == 3) {
+        else if (i >= 300 && i <= 399) {
             ui->level_3->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
-        else if (i == 4) {
+        else if (i >= 400 && i <= 499) {
             ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 178, 0); }");
         }
-        else if (i == 5) {
+        else if (i >= 500 && i <= 599) {
             ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 178, 0); }");
         }
-        else if (i == 6) {
+        else if (i >= 600 && i <= 699) {
             ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 178, 0); }");
         }
-        else if (i == 7) {
+        else if (i >= 700 && i <= 799) {
             ui->level_7->setStyleSheet("QLabel { background-color: rgb(255, 173, 244); }");
         }
-        else if (i == 8) {
+        else if (i == 800) {
             ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 173, 244); }");
         }
     }
@@ -134,6 +137,9 @@ void MainWindow::displayBatteryLevel()
 
 void MainWindow::batteryDisplay_off()
 {
+    qDebug() << "battery display off...";
+    //disconnect(batteryLevelTimer, SIGNAL(timeout()), this, SLOT(batteryDisplay_off()));
+    batteryLevelTimer->stop();
     for (int i = 1; i <= 8; i++) {
         if (i == 1) {
             if (i == deviceBattery->getBatteryLevel()) {
@@ -206,6 +212,7 @@ void MainWindow::power_off()
     batteryDisplay_off();
 
     //Turn off all the mode and session lights
+    qDebug() << "powering off...";
     ui->alpha_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
     ui->delta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
     ui->theta_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
@@ -215,6 +222,11 @@ void MainWindow::power_off()
     ui->userdesignated_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
 
     disconnect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_off()));
+}
+
+void MainWindow::replaceBattery()
+{
+    deviceBattery->replaceBattery();
 }
 
 void MainWindow::blink_modeLight(){
@@ -258,6 +270,7 @@ void MainWindow::clearDisplay(){
     ui->textEdit->clear();
 }
 void MainWindow::checkConnection(){
+    qDebug() << "Check connection...";
     if (state == "on" && displayingBattery == false){
         ui->level_1->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
         ui->level_2->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
@@ -302,6 +315,7 @@ void MainWindow::viewDatabase()
 
 void MainWindow::displaySoftOn()
 {
+    qDebug() << "Display Soft on...";
     if (softOnOffLevel == 1) {
         ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         softOnOffLevel++;
@@ -339,10 +353,13 @@ void MainWindow::displaySoftOn()
 
 void MainWindow::displaySoftOff()
 {
+    qDebug() << "display soft off...";
     if (softOnOffLevel == 1) {
         ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         disconnect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOff()));
         softOnOffTimer->stop();
+        //turn off device
+        power_off();
     }
     else if (softOnOffLevel == 2) {
         ui->level_2->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
@@ -446,13 +463,18 @@ void MainWindow::setSession(){
 
 void MainWindow::startTherapy(){
     if(state == "off") return;
+    if(ongoingTherapy == true) return;
 
     //connection test
     if(connectionObject.checkConnection(ui->checkBox->isChecked(), ui->checkBox_2->isChecked(), ui->checkBox_3->isChecked(), ui->checkBox_4->isChecked()) == 4) return;
 
     //create therapy
+    ongoingTherapy = true;
     therapy = new Therapy((Session)session, getDuration());
     qDebug() << therapy->getTherapy();
+
+    //Drain the battery accordingly
+    deviceBattery->drainBattery(therapy->getSession(), getDuration());
 
     //Soft on
     therapy->softOn();
@@ -474,9 +496,7 @@ void MainWindow::endTherapy(){
     therapy->softOff();
     connect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOff()));
     softOnOffTimer->start(SOFT_TIME);
-
-    //turn off device
-    power_off();
+    ongoingTherapy = false;
 }
 
 void MainWindow::incIntensity(){

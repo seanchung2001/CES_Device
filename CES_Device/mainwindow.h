@@ -49,6 +49,7 @@ private:
     int session = 0;
     int duration = 0;
     int softOnOffLevel = 1;
+    bool ongoingTherapy = false;
 
     //dbmanager
     QDate date;
@@ -65,6 +66,7 @@ private slots:
     void batteryDisplay_off();
     void lowBattery_blink();
     void power_off();
+    void replaceBattery();
 
     //Israels Functions
     void blink_modeLight();

@@ -4,7 +4,7 @@
 #include <QString>
 #include "session.h"
 
-#define SOFT_TIME 5000 //ms
+#define SOFT_TIME 1000 //ms
 
 class Therapy
 {
@@ -17,6 +17,8 @@ public:
     void softOff();
     void incIntensity();
     void decIntensity();
+    int getDuration();
+    Session getSession();
 
 private:
     Session session;

@@ -75,6 +75,7 @@ public:
     QCheckBox *checkBox_4;
     QPushButton *recordSessionButton;
     QPushButton *viewDatabaseButton;
+    QPushButton *replace_battery_button;
     QMenuBar *menubar;
     QStatusBar *statusbar;
 
@@ -229,6 +230,9 @@ public:
         viewDatabaseButton = new QPushButton(centralwidget);
         viewDatabaseButton->setObjectName(QString::fromUtf8("viewDatabaseButton"));
         viewDatabaseButton->setGeometry(QRect(140, 480, 111, 61));
+        replace_battery_button = new QPushButton(centralwidget);
+        replace_battery_button->setObjectName(QString::fromUtf8("replace_battery_button"));
+        replace_battery_button->setGeometry(QRect(140, 560, 111, 51));
         MainWindow->setCentralWidget(centralwidget);
         menubar = new QMenuBar(MainWindow);
         menubar->setObjectName(QString::fromUtf8("menubar"));
@@ -293,6 +297,7 @@ public:
         checkBox_4->setText(QApplication::translate("MainWindow", "Wet earlobe (R)", nullptr));
         recordSessionButton->setText(QApplication::translate("MainWindow", "Record Session", nullptr));
         viewDatabaseButton->setText(QApplication::translate("MainWindow", "View Session Logs", nullptr));
+        replace_battery_button->setText(QApplication::translate("MainWindow", "Replace Battery", nullptr));
     } // retranslateUi
 
 };

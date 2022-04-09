@@ -635,6 +635,19 @@
      <string>View Session Logs</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="replace_battery_button">
+    <property name="geometry">
+     <rect>
+      <x>140</x>
+      <y>560</y>
+      <width>111</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Replace Battery</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

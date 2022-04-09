@@ -77,6 +77,16 @@ void Therapy::incIntensity(){
 
 void Therapy::decIntensity(){
     if (intensity > 1) intensity--;
-     qDebug() << "decrease to intensity " << intensity;
+    qDebug() << "decrease to intensity " << intensity;
+}
+
+int Therapy::getDuration()
+{
+    return duration;
+}
+
+Session Therapy::getSession()
+{
+    return session;
 }
 
