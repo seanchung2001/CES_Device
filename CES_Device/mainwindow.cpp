@@ -276,6 +276,7 @@ void MainWindow::clearDisplay(){
     ui->level_6->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
     ui->level_7->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
     ui->level_8->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+    ui->label->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
 }
 void MainWindow::checkConnection(){
     qDebug() << "Check connection...";
@@ -477,12 +478,14 @@ void MainWindow::startTherapy(){
     if(connectionObject.checkConnection(ui->checkBox->isChecked(), ui->checkBox_2->isChecked(), ui->checkBox_3->isChecked(), ui->checkBox_4->isChecked()) == 4){
         connectionObject.senddisplayConnection(4);
         connectionObject.sendblink_modeLight();
+        delay();
         connectionObject.stopTimer();
         connectionObject.sendclearDisplay();
         return;
     }
     checkConnection();
     connectionObject.sendblink_modeLight();
+    delay();
     connectionObject.stopTimer();
     connectionObject.sendclearDisplay();
 
@@ -523,4 +526,11 @@ void MainWindow::incIntensity(){
 
 void MainWindow::decIntensity(){
     if(therapy) therapy->decIntensity();
+}
+
+void MainWindow::delay(){
+    QTime dieTime= QTime::currentTime().addSecs(3);
+    while(QTime::currentTime() < dieTime){
+        QCoreApplication::processEvents(QEventLoop::AllEvents, 100);
+    }
 }

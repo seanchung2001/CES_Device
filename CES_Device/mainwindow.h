@@ -59,6 +59,9 @@ private:
     battery *deviceBattery;
     bool displayingBattery = false;
 
+    //Delay function
+    void delay();
+
 private slots:
     //Sean's functions
     void power_on();
