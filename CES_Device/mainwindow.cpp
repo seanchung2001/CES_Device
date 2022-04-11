@@ -70,10 +70,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::power_on()
 {
+    //Since the power button will be shared between power_on() and power_off(), we need to do a check
     if (state == "off") {
+        //Switch the state to be on
         state = "on";
+        //If no session is selected within 2 minutes, call the power_off() function
         powerOffTimer->start(200000);
+        //Turn the power light on
         ui->power_light->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+
+        //display the battery level
         displayBatteryLevel();
 
         //set default therapy settings
@@ -85,34 +91,44 @@ void MainWindow::power_on()
         ui->fourtyfivemin_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         ui->userdesignated_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
     }
+    //Now we can make the power_off() connection (to not interfere with calling power_on)
     connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_off()));
 
 }
 
 void MainWindow::displayBatteryLevel()
 {
+    //Let the other functions controlling the GUI know that we are displaying the battery level
     displayingBattery = true;
     qDebug() << "Displaying battery level...";
+
     for (int i = 0; i <= deviceBattery->getBatteryLevel(); i++) {
         if (i >= 1 && i <= 199) {
+            //Check if the battery level is critically low
             if (i == deviceBattery->getBatteryLevel()) {
+                //Blink the battery level
                 connect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
                 batteryLow_blinkTimer->start(1000);
                 continue;
             }
+            //Battery level is not low
             if (deviceBattery->getBatteryLevel() >= 200 && deviceBattery->getBatteryLevel() <= 299) {
                 continue;
             }
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
         else if (i >= 200 && i <= 299) {
+            //Check if the battery level is low
             if (i == deviceBattery->getBatteryLevel()) {
+                //Blink the battery level
                 connect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
                 batteryLow_blinkTimer->start(1000);
                 continue;
             }
+            //Battery level is not low
             ui->level_2->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
+        //Change the rest of the battery level lights accordingly
         else if (i >= 300 && i <= 399) {
             ui->level_3->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
@@ -132,6 +148,7 @@ void MainWindow::displayBatteryLevel()
             ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 173, 244); }");
         }
     }
+    //Display the battery for 7 seconds, then call batteryDisplay_off()
     batteryLevelTimer->start(7000);
 }
 
@@ -140,39 +157,46 @@ void MainWindow::batteryDisplay_off()
     qDebug() << "battery display off...";
     //disconnect(batteryLevelTimer, SIGNAL(timeout()), this, SLOT(batteryDisplay_off()));
     batteryLevelTimer->stop();
-    for (int i = 1; i <= 8; i++) {
-        if (i == 1) {
+    for (int i = 1; i <= 800; i++) {
+        if (i >= 1 && i <= 199) {
+            //If battery is critically low
             if (i == deviceBattery->getBatteryLevel()) {
+                //Turn off the blinking battery level
                 batteryLow_blinkTimer->stop();
                 disconnect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
             }
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+            //Let the functions controlling the GUI know we are not displaying battery level anymore
             displayingBattery = false;
         }
-        else if (i == 2) {
+        else if (i >= 200 && i <= 299) {
+            //If battery is low
             if (i == deviceBattery->getBatteryLevel()) {
+                //Turn off the blinking battery level
                 batteryLow_blinkTimer->stop();
                 disconnect(batteryLow_blinkTimer, SIGNAL(timeout()), this, SLOT(lowBattery_blink()));
             }
             ui->level_2->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+            //Let the functions controlling the GUI know we are not displaying battery level anymore
             displayingBattery = false;
         }
-        else if (i == 3) {
+        //Turn back the rest of the battery levels to just blank
+        else if (i >= 300 && i <= 399) {
             ui->level_3->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
-        else if (i == 4) {
+        else if (i >= 400 && i <= 499) {
             ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
-        else if (i == 5) {
+        else if (i >= 500 && i <= 599) {
             ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
-        else if (i == 6) {
+        else if (i >= 600 && i <= 699) {
             ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
-        else if (i == 7) {
+        else if (i >= 700 && i <= 799) {
             ui->level_7->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
-        else if (i == 8) {
+        else if (i == 800) {
             ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
     }
@@ -180,34 +204,53 @@ void MainWindow::batteryDisplay_off()
 
 void MainWindow::lowBattery_blink()
 {
+    //If the battery level is not on, turn it on
     if (lowBattery_blinkStatus == "off") {
-        if (deviceBattery->getBatteryLevel() == 1) {
+        //Critically low
+        if (deviceBattery->getBatteryLevel() >= 1 && deviceBattery->getBatteryLevel() <= 199) {
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
-        else if (deviceBattery->getBatteryLevel() == 2) {
+        //Low
+        else if (deviceBattery->getBatteryLevel() >= 200 && deviceBattery->getBatteryLevel() <= 299) {
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
             ui->level_2->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
+        //Turn the blink status to "on" so that it will turn it off next time around.
         lowBattery_blinkStatus = "on";
     }
+    //If the battery level is on, turn it off. This will cause the blinking effect.
     else {
-        if (deviceBattery->getBatteryLevel() == 1) {
+        //Critically low
+        if (deviceBattery->getBatteryLevel() >= 1 && deviceBattery->getBatteryLevel() <= 199) {
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
-        else if (deviceBattery->getBatteryLevel() == 2) {
+        //Low
+        else if (deviceBattery->getBatteryLevel() >= 200 && deviceBattery->getBatteryLevel() <= 299) {
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
             ui->level_2->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
         }
+        //Turn the blink status to "off" so that it will turn it on the next time around.
         lowBattery_blinkStatus = "off";
     }
 }
 
 void MainWindow::power_off()
 {
+    //Turn the power light off
     if (state == "on") {
         state = "off";
         ui->power_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
     }
+
+    //Turn off soft on/soft off timers
+    disconnect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOn()));
+    disconnect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOff()));
+    softOnOffTimer->stop();
+
+    //If a session is currently ongoing, stop the session
+    connect(sessionTimer, SIGNAL(timeout()), this, SLOT(endTherapy()));
+    sessionTimer->stop();
+
     //Turn the battery display off
     batteryDisplay_off();
 
@@ -221,11 +264,13 @@ void MainWindow::power_off()
     ui->fourtyfivemin_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
     ui->userdesignated_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
 
+    //disconnect this function with the power button so that it automatically calls power_on the next time the power button is clicked.
     disconnect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_off()));
 }
 
 void MainWindow::replaceBattery()
 {
+    //Change the battery level back to 800 (maximum battery level)
     deviceBattery->replaceBattery();
 }
 
@@ -324,6 +369,7 @@ void MainWindow::viewDatabase()
 
 void MainWindow::displaySoftOn()
 {
+    //Check if the power is off
     qDebug() << "Display Soft on...";
     if (softOnOffLevel == 1) {
         ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
@@ -471,8 +517,7 @@ void MainWindow::setSession(){
 }
 
 void MainWindow::startTherapy(){
-    if(state == "off") return;
-    if(ongoingTherapy == true) return;
+    if(state == "off" || ongoingTherapy == true || displayingBattery == true) return;
 
     //connection test
     if(connectionObject.checkConnection(ui->checkBox->isChecked(), ui->checkBox_2->isChecked(), ui->checkBox_3->isChecked(), ui->checkBox_4->isChecked()) == 4){
