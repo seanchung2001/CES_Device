@@ -268,6 +268,14 @@ void MainWindow::displayConnection(int x){
 
 void MainWindow::clearDisplay(){
     ui->textEdit->clear();
+    ui->level_1->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+    ui->level_2->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+    ui->level_3->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+    ui->level_4->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+    ui->level_5->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+    ui->level_6->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+    ui->level_7->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
+    ui->level_8->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
 }
 void MainWindow::checkConnection(){
     qDebug() << "Check connection...";
@@ -466,7 +474,17 @@ void MainWindow::startTherapy(){
     if(ongoingTherapy == true) return;
 
     //connection test
-    if(connectionObject.checkConnection(ui->checkBox->isChecked(), ui->checkBox_2->isChecked(), ui->checkBox_3->isChecked(), ui->checkBox_4->isChecked()) == 4) return;
+    if(connectionObject.checkConnection(ui->checkBox->isChecked(), ui->checkBox_2->isChecked(), ui->checkBox_3->isChecked(), ui->checkBox_4->isChecked()) == 4){
+        connectionObject.senddisplayConnection(4);
+        connectionObject.sendblink_modeLight();
+        connectionObject.stopTimer();
+        connectionObject.sendclearDisplay();
+        return;
+    }
+    checkConnection();
+    connectionObject.sendblink_modeLight();
+    connectionObject.stopTimer();
+    connectionObject.sendclearDisplay();
 
     //create therapy
     ongoingTherapy = true;

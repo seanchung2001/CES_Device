@@ -30,3 +30,7 @@ void connectionTest::senddisplayConnection(int x){
 void connectionTest::sendclearDisplay(){
     emit clearDisplay();
 }
+
+void connectionTest::stopTimer(){
+    blink->stop();
+}
