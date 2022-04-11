@@ -16,6 +16,7 @@ public:
     void senddisplayConnection(int);
     void sendclearDisplay();
     int checkConnection(bool, bool, bool, bool);
+    void stopTimer();
 
 signals:
     void blink_modeLight();
