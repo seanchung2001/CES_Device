@@ -246,6 +246,9 @@ void MainWindow::power_off()
         ui->power_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
     }
 
+    //set ongoing therapy to false
+    ongoingTherapy = false;
+
     //Turn off soft on/soft off timers
     disconnect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOn()));
     disconnect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOff()));
