@@ -96,7 +96,7 @@ void MainWindow::power_on()
         ui->userdesignated_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
     }
     //Now we can make the power_off() connection (to not interfere with calling power_on)
-    connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_off()));
+    connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(endTherapy()));
 
 }
 
@@ -272,7 +272,7 @@ void MainWindow::power_off()
     ui->userdesignated_light->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
 
     //disconnect this function with the power button so that it automatically calls power_on the next time the power button is clicked.
-    disconnect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_off()));
+    //disconnect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_off()));
 }
 
 void MainWindow::replaceBattery()
@@ -573,6 +573,9 @@ void MainWindow::endTherapy(){
     connect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOff()));
     softOnOffTimer->start(SOFT_TIME);
     ongoingTherapy = false;
+
+    //disconnect this function with the power button so that it automatically calls power_on the next time the power button is clicked.
+    disconnect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(endTherapy()));
 }
 
 void MainWindow::incIntensity(){
