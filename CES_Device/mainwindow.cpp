@@ -342,29 +342,27 @@ void MainWindow::checkConnection(){
 
 }
 
-
 //write to db
 void MainWindow::recordSession()
 {
     //get date
-    date = QDate::currentDate();
-    QString dateString = date.toString("ddd MMMM d yyyy");
-    //need to get session data as well (not completed yet)
+    QDateTime dateTime = QDateTime::currentDateTime();
+    QString dateString = dateTime.toString("ddd MMMM d yyyy hh:mm");
     //build actual string
     QString log;
-    log += dateString;
-    log += " temporary session data";
+    log += dateString + " ";
+    log += therapy->getTherapy();
     //write to database
-    db.writeLog(log.toStdString());
+    db.writeLog(log);
 }
 
 //read db
 void MainWindow::viewDatabase()
 {
     //just need to read the entire log
-    string entireLog;
+    QString entireLog;
     entireLog = db.readLog();
-    ui->textEdit->append(QString::fromStdString(entireLog));
+    ui->textEdit->append(entireLog);
 }
 
 void MainWindow::displaySoftOn()
@@ -551,6 +549,11 @@ void MainWindow::startTherapy(){
     connect(sessionTimer, SIGNAL(timeout()), this, SLOT(endTherapy()));
     sessionTimer->start(getDuration()*1000); //minutes  = secs as msecs
     qInfo("start timer");
+
+    //enable record button
+    //only allow user to record therapy once a therapy has started
+    //if not, attempting to record a session when 'therapy' variable is uninitialized will shut system down
+    ui->recordSessionButton->setEnabled(true);
 }
 
 void MainWindow::endTherapy(){

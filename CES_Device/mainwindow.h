@@ -14,8 +14,7 @@
 //dbmanager
 #include "DBManager.h"
 #include <QString>
-#include <string>
-#include <QDate>
+#include <QDateTime>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }

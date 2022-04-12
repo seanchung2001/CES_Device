@@ -83,6 +83,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
+        MainWindow->setEnabled(true);
         MainWindow->resize(950, 702);
         centralwidget = new QWidget(MainWindow);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
@@ -226,6 +227,7 @@ public:
         checkBox_4->setGeometry(QRect(500, 510, 111, 23));
         recordSessionButton = new QPushButton(centralwidget);
         recordSessionButton->setObjectName(QString::fromUtf8("recordSessionButton"));
+        recordSessionButton->setEnabled(false);
         recordSessionButton->setGeometry(QRect(10, 480, 101, 61));
         viewDatabaseButton = new QPushButton(centralwidget);
         viewDatabaseButton->setObjectName(QString::fromUtf8("viewDatabaseButton"));

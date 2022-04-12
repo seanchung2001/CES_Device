@@ -1,10 +1,10 @@
 #ifndef DBMANAGER_H
 #define DBMANAGER_H
 
-#include <iostream>
-#include <fstream>
-#include <string>
-using namespace std;
+#include <QString>
+#include <QFile>
+#include <QIODevice>
+#include <QTextStream>
 
 class DBManager {
 
@@ -13,11 +13,11 @@ class DBManager {
         DBManager();
 
         //other
-        string readLog();
-        void writeLog(string);
+        QString readLog();
+        void writeLog(QString);
 
     private:
         //variables
-        string fileName;
+        QString fileName;
 };
 #endif
