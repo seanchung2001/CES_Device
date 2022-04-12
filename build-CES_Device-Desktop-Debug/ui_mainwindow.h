@@ -12,6 +12,7 @@
 #include <QtCore/QVariant>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QCheckBox>
+#include <QtWidgets/QComboBox>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QMainWindow>
@@ -67,6 +68,7 @@ public:
     QLabel *label;
     QPushButton *setDuration_button;
     QPushButton *setSession_button;
+    QComboBox *userdes_comboBox;
     QTextEdit *textEdit;
     QPushButton *connectionButton;
     QCheckBox *checkBox;
@@ -203,10 +205,13 @@ public:
         label->setGeometry(QRect(230, 40, 16, 16));
         setDuration_button = new QPushButton(groupBox);
         setDuration_button->setObjectName(QString::fromUtf8("setDuration_button"));
-        setDuration_button->setGeometry(QRect(180, 50, 21, 25));
+        setDuration_button->setGeometry(QRect(170, 50, 16, 25));
         setSession_button = new QPushButton(groupBox);
         setSession_button->setObjectName(QString::fromUtf8("setSession_button"));
-        setSession_button->setGeometry(QRect(180, 90, 21, 25));
+        setSession_button->setGeometry(QRect(170, 90, 16, 25));
+        userdes_comboBox = new QComboBox(groupBox);
+        userdes_comboBox->setObjectName(QString::fromUtf8("userdes_comboBox"));
+        userdes_comboBox->setGeometry(QRect(190, 50, 41, 25));
         textEdit = new QTextEdit(centralwidget);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
         textEdit->setGeometry(QRect(453, 169, 311, 271));

@@ -51,6 +51,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->setDuration_button, SIGNAL(released()), this, SLOT(setDuration()));
     connect(ui->setSession_button, SIGNAL(released()), this, SLOT(setSession()));
     connect(ui->replace_battery_button, SIGNAL(clicked(bool)), this, SLOT(replaceBattery()));
+    //user-designated time combobox
+    for(int i = 1; i<=180; i++){
+        ui->userdes_comboBox->addItem(QString::number(i));
+    }
 
     //signal slots for database
     DBManager db;
@@ -451,7 +455,7 @@ int MainWindow::getDuration(){      //in minutes instead of enum
     case FORTYFIVE:
         return 45;
     case CUSTOM:
-        return 60;  //should be changed; user input needed
+        return ui->userdes_comboBox->currentText().toInt();
     default:
         return 0;
     }
