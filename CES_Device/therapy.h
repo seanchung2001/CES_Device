@@ -11,10 +11,6 @@ class Therapy
 public:
     Therapy(Session, int);
     QString getTherapy();
-    void startSession();
-    void endSession();
-    void softOn();
-    void softOff();
     void incIntensity();
     void decIntensity();
     int getDuration();

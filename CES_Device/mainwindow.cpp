@@ -375,7 +375,7 @@ void MainWindow::viewDatabase()
 void MainWindow::displaySoftOn()
 {
     //Check if the power is off
-    qDebug() << "Display Soft on...";
+    qDebug() << "display Soft on...";
     if (softOnOffLevel == 1) {
         ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         softOnOffLevel++;
@@ -408,6 +408,10 @@ void MainWindow::displaySoftOn()
         ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 173, 244); }");
         disconnect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOn()));
         softOnOffTimer->stop();
+        //begin session timer
+        connect(sessionTimer, SIGNAL(timeout()), this, SLOT(endTherapy()));
+        sessionTimer->start(getDuration()*1000); //minutes  = secs as msecs
+        qInfo("start timer");
     }
 }
 
@@ -548,14 +552,8 @@ void MainWindow::startTherapy(){
     deviceBattery->drainBattery(therapy->getSession(), getDuration());
 
     //Soft on
-    therapy->softOn();
     connect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOn()));
     softOnOffTimer->start(SOFT_TIME);
-
-    //begin session timer
-    connect(sessionTimer, SIGNAL(timeout()), this, SLOT(endTherapy()));
-    sessionTimer->start(getDuration()*1000); //minutes  = secs as msecs
-    qInfo("start timer");
 
     //enable record button
     //only allow user to record therapy once a therapy has started
@@ -564,18 +562,31 @@ void MainWindow::startTherapy(){
 }
 
 void MainWindow::endTherapy(){
-    //end timer
+    //needed so that if power button pressed during softon, softonprocess will end immediately
+    disconnect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOn()));
+    softOnOffTimer->stop();
+
+    //end session timer
+    disconnect(sessionTimer, SIGNAL(timeout()), this, SLOT(endTherapy()));
     sessionTimer->stop();
     qInfo("end timer");
 
     //Soft Off
-    therapy->softOff();
     connect(softOnOffTimer, SIGNAL(timeout()), this, SLOT(displaySoftOff()));
     softOnOffTimer->start(SOFT_TIME);
+
+    //reset settings
     ongoingTherapy = false;
+    session = 0;
+    duration = 0;
 
     //disconnect this function with the power button so that it automatically calls power_on the next time the power button is clicked.
     disconnect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(endTherapy()));
+
+    //diable record button
+    //only allow user to record therapy once a therapy has started
+    //if not, attempting to record a session when 'therapy' variable is uninitialized will shut system down
+    ui->recordSessionButton->setEnabled(false);
 }
 
 void MainWindow::incIntensity(){
