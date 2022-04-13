@@ -331,10 +331,10 @@
     <widget class="QLabel" name="oasispro_label">
      <property name="geometry">
       <rect>
-       <x>300</x>
+       <x>270</x>
        <y>100</y>
-       <width>111</width>
-       <height>61</height>
+       <width>141</width>
+       <height>101</height>
       </rect>
      </property>
      <property name="text">
@@ -365,19 +365,6 @@
      </property>
      <property name="text">
       <string/>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="mode_button">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>170</y>
-       <width>51</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>MODE</string>
      </property>
     </widget>
     <widget class="QLabel" name="power_light">

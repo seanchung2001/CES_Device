@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     QPixmap user_designated(":/labels/labels/userdesignated.png");
     ui->userdesignated_label->setPixmap(user_designated.scaled(30, 30, Qt::KeepAspectRatio));
     QPixmap oasislogo(":/labels/labels/oasislogo.png");
-    ui->oasispro_label->setPixmap(oasislogo.scaled(90, 170, Qt::KeepAspectRatio));
+    ui->oasispro_label->setPixmap(oasislogo.scaled(110, 190, Qt::KeepAspectRatio));
     QPixmap topleft(":/labels/labels/topleftlogo.png");
     ui->topleft_label->setPixmap(topleft.scaled(20, 20, Qt::KeepAspectRatio));
     QPixmap bottomleft(":/labels/labels/bottomleftlogo.png");
@@ -114,10 +114,11 @@ void MainWindow::displayBatteryLevel()
                 batteryLow_blinkTimer->start(1000);
                 continue;
             }
-            //Battery level is not low
+            //Synchronize with battery low
             if (deviceBattery->getBatteryLevel() >= 200 && deviceBattery->getBatteryLevel() <= 299) {
                 continue;
             }
+            //Battery level is not low
             ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
         }
         else if (i >= 200 && i <= 299) {

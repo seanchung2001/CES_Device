@@ -55,7 +55,6 @@ public:
     QLabel *oasispro_label;
     QLabel *topleft_label;
     QLabel *bottomleft_label;
-    QPushButton *mode_button;
     QLabel *power_light;
     QLabel *hundredHz_light;
     QLabel *userdesignated_light;
@@ -161,16 +160,13 @@ public:
         leftear_label->setGeometry(QRect(240, 60, 51, 17));
         oasispro_label = new QLabel(groupBox);
         oasispro_label->setObjectName(QString::fromUtf8("oasispro_label"));
-        oasispro_label->setGeometry(QRect(300, 100, 111, 61));
+        oasispro_label->setGeometry(QRect(270, 100, 141, 101));
         topleft_label = new QLabel(groupBox);
         topleft_label->setObjectName(QString::fromUtf8("topleft_label"));
         topleft_label->setGeometry(QRect(10, 40, 21, 16));
         bottomleft_label = new QLabel(groupBox);
         bottomleft_label->setObjectName(QString::fromUtf8("bottomleft_label"));
         bottomleft_label->setGeometry(QRect(10, 210, 21, 17));
-        mode_button = new QPushButton(groupBox);
-        mode_button->setObjectName(QString::fromUtf8("mode_button"));
-        mode_button->setGeometry(QRect(260, 170, 51, 41));
         power_light = new QLabel(groupBox);
         power_light->setObjectName(QString::fromUtf8("power_light"));
         power_light->setGeometry(QRect(270, 280, 31, 16));
@@ -276,7 +272,6 @@ public:
         oasispro_label->setText(QString());
         topleft_label->setText(QString());
         bottomleft_label->setText(QString());
-        mode_button->setText(QApplication::translate("MainWindow", "MODE", nullptr));
         power_light->setText(QString());
         hundredHz_light->setText(QString());
         userdesignated_light->setText(QString());
