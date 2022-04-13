@@ -41,7 +41,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_on()));
     connect(batteryLevelTimer, SIGNAL(timeout()), this, SLOT(batteryDisplay_off()));
     connect(powerOffTimer, SIGNAL(timeout()), this, SLOT(power_off()));
-    connect(ui->connectionButton, SIGNAL(clicked(bool)), this, SLOT(checkConnection()));
     connect(&connectionObject, SIGNAL(blink_modeLight()), this, SLOT(blink_modeLight()));
     connect(&connectionObject, SIGNAL(displayConnection(int)), this, SLOT(displayConnection(int)));
     connect(&connectionObject, SIGNAL(clearDisplay()), this, SLOT(clearDisplay()));
