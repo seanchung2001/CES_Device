@@ -10,7 +10,7 @@
     <x>0</x>
     <y>0</y>
     <width>950</width>
-    <height>702</height>
+    <height>649</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
    <widget class="QGroupBox" name="groupBox">
     <property name="geometry">
      <rect>
-      <x>0</x>
+      <x>20</x>
       <y>130</y>
       <width>421</width>
       <height>311</height>
@@ -318,27 +318,14 @@
     <widget class="QLabel" name="leftear_label">
      <property name="geometry">
       <rect>
-       <x>230</x>
+       <x>240</x>
        <y>60</y>
-       <width>21</width>
+       <width>51</width>
        <height>17</height>
       </rect>
      </property>
      <property name="text">
-      <string>  L</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="rightear_label">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>60</y>
-       <width>21</width>
-       <height>17</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>  R</string>
+      <string>Channel</string>
      </property>
     </widget>
     <widget class="QLabel" name="oasispro_label">
@@ -500,9 +487,9 @@
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>230</x>
+       <x>240</x>
        <y>40</y>
-       <width>16</width>
+       <width>51</width>
        <height>16</height>
       </rect>
      </property>
@@ -550,31 +537,18 @@
    <widget class="QTextEdit" name="textEdit">
     <property name="geometry">
      <rect>
-      <x>453</x>
-      <y>169</y>
-      <width>311</width>
-      <height>271</height>
+      <x>470</x>
+      <y>150</y>
+      <width>461</width>
+      <height>291</height>
      </rect>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="connectionButton">
-    <property name="geometry">
-     <rect>
-      <x>280</x>
-      <y>480</y>
-      <width>80</width>
-      <height>61</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Connection</string>
     </property>
    </widget>
    <widget class="QCheckBox" name="checkBox">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>480</y>
+      <x>550</x>
+      <y>470</y>
       <width>82</width>
       <height>23</height>
      </rect>
@@ -586,8 +560,8 @@
    <widget class="QCheckBox" name="checkBox_2">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>510</y>
+      <x>550</x>
+      <y>500</y>
       <width>82</width>
       <height>23</height>
      </rect>
@@ -599,8 +573,8 @@
    <widget class="QCheckBox" name="checkBox_3">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>480</y>
+      <x>640</x>
+      <y>470</y>
       <width>111</width>
       <height>23</height>
      </rect>
@@ -612,8 +586,8 @@
    <widget class="QCheckBox" name="checkBox_4">
     <property name="geometry">
      <rect>
-      <x>500</x>
-      <y>510</y>
+      <x>640</x>
+      <y>500</y>
       <width>111</width>
       <height>23</height>
      </rect>
@@ -628,8 +602,8 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>480</y>
+      <x>150</x>
+      <y>470</y>
       <width>101</width>
       <height>61</height>
      </rect>
@@ -641,8 +615,8 @@
    <widget class="QPushButton" name="viewDatabaseButton">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>480</y>
+      <x>280</x>
+      <y>470</y>
       <width>111</width>
       <height>61</height>
      </rect>
@@ -654,10 +628,10 @@
    <widget class="QPushButton" name="replace_battery_button">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>560</y>
+      <x>410</x>
+      <y>470</y>
       <width>111</width>
-      <height>51</height>
+      <height>61</height>
      </rect>
     </property>
     <property name="text">
