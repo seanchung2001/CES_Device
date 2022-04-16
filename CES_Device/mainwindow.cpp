@@ -591,10 +591,80 @@ void MainWindow::endTherapy(){
 
 void MainWindow::incIntensity(){
    if(therapy) therapy->incIntensity();
+   blinkOnIntensity();
 }
 
 void MainWindow::decIntensity(){
     if(therapy) therapy->decIntensity();
+    blinkOnIntensity();
+}
+
+void MainWindow::blinkOnIntensity(){
+    //turn off light
+    switch(therapy->getIntensity()){
+    case 1:
+    ui->level_1->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    break;
+    case 2:
+    ui->level_2->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    break;
+    case 3:
+    ui->level_3->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    break;
+    case 4:
+    ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    break;
+    case 5:
+    ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    break;
+    case 6:
+    ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    break;
+    case 7:
+    ui->level_7->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    break;
+    case 8:
+    ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 255, 255); }");
+    break;
+    }
+
+    //start intensity light timer
+    connect(intensityTimer, SIGNAL(timeout()), this, SLOT(blinkOffIntensity()));
+    intensityTimer->start(500);
+}
+
+void MainWindow::blinkOffIntensity(){
+    //end intensity light timer
+    disconnect(intensityTimer, SIGNAL(timeout()), this, SLOT(blinkOffIntensity()));
+    intensityTimer->stop();
+
+    //turn on light
+    switch(therapy->getIntensity()){
+    case 1:
+    ui->level_1->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+    break;
+    case 2:
+    ui->level_2->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+    break;
+    case 3:
+    ui->level_3->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
+    break;
+    case 4:
+    ui->level_4->setStyleSheet("QLabel { background-color: rgb(255, 178, 0); }");
+    break;
+    case 5:
+    ui->level_5->setStyleSheet("QLabel { background-color: rgb(255, 178, 0); }");
+    break;
+    case 6:
+    ui->level_6->setStyleSheet("QLabel { background-color: rgb(255, 178, 0); }");
+    break;
+    case 7:
+    ui->level_7->setStyleSheet("QLabel { background-color: rgb(255, 173, 244); }");
+    break;
+    case 8:
+    ui->level_8->setStyleSheet("QLabel { background-color: rgb(255, 173, 244); }");
+    break;
+    }
 }
 
 void MainWindow::delay(){

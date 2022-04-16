@@ -52,3 +52,7 @@ Session Therapy::getSession()
     return session;
 }
 
+
+int Therapy::getIntensity(){
+    return intensity;
+}

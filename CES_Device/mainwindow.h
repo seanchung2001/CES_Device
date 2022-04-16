@@ -37,6 +37,7 @@ private:
     QTimer *batteryLow_blinkTimer;
     QTimer *sessionTimer;
     QTimer *softOnOffTimer = new QTimer();
+    QTimer *intensityTimer = new QTimer();
 
     QString state = "off";
     QString lowBattery_blinkStatus = "off";
@@ -86,6 +87,8 @@ private slots:
     void decIntensity();
     void displaySoftOn();
     void displaySoftOff();
+    void blinkOnIntensity();
+    void blinkOffIntensity();
 
     //dbmanager
     void recordSession();

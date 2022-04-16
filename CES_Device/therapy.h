@@ -15,6 +15,7 @@ public:
     void decIntensity();
     int getDuration();
     Session getSession();
+    int getIntensity();
 
 private:
     Session session;
