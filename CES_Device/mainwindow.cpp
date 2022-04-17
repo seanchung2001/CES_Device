@@ -57,7 +57,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //signal slots for database
     DBManager db;
-    QDate date;
+    QDateTime dateTime;
     connect(ui->recordSessionButton, SIGNAL(clicked(bool)), this, SLOT(recordSession()));
     connect(ui->viewDatabaseButton, SIGNAL(clicked(bool)), this, SLOT(viewDatabase()));
 
@@ -353,7 +353,7 @@ void MainWindow::checkConnection(){
 void MainWindow::recordSession()
 {
     //get date
-    QDateTime dateTime = QDateTime::currentDateTime();
+    dateTime = QDateTime::currentDateTime();
     QString dateString = dateTime.toString("ddd MMMM d yyyy hh:mm");
     //build actual string
     QString log;
