@@ -9,8 +9,9 @@ class connectionTest: public QObject
     Q_OBJECT
 public:
     connectionTest();
-    QTimer *blink;
+    QTimer *blink; //The Timer object
 
+    //Functions for sending signals
     void sendcheckConnection();
     void sendblink_modeLight();
     void senddisplayConnection(int);
@@ -18,6 +19,7 @@ public:
     int checkConnection(bool, bool, bool, bool);
     void stopTimer();
 
+    //The signals
 signals:
     void blink_modeLight();
     void displayConnection(int);

@@ -41,7 +41,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->power_button, SIGNAL(clicked(bool)), this, SLOT(power_on()));
     connect(batteryLevelTimer, SIGNAL(timeout()), this, SLOT(batteryDisplay_off()));
     connect(powerOffTimer, SIGNAL(timeout()), this, SLOT(power_off()));
-    connect(&connectionObject, SIGNAL(blink_modeLight()), this, SLOT(blink_modeLight()));
+    connect(&connectionObject, SIGNAL(blink_modeLight()), this, SLOT(blink_modeLight())); //Sets up the connection between the connection class and the mainwindow, same can be said for the next 2
     connect(&connectionObject, SIGNAL(displayConnection(int)), this, SLOT(displayConnection(int)));
     connect(&connectionObject, SIGNAL(clearDisplay()), this, SLOT(clearDisplay()));
     connect(ui->select_button, SIGNAL(released()), this, SLOT(startTherapy()));
@@ -282,6 +282,7 @@ void MainWindow::replaceBattery()
 }
 
 void MainWindow::blink_modeLight(){
+    //This is to create the blinking light, this works by changing the number every second and based of that number we change the color of the box, it will create a blinking feeling
      if (alternatingNum == 0){
          ui->label->setStyleSheet("QLabel { background-color: rgb(144, 238, 144); }");
          alternatingNum = 1;
@@ -291,6 +292,7 @@ void MainWindow::blink_modeLight(){
      }
 }
 void MainWindow::displayConnection(int x){
+    //This is how we display the connection based on the number input
     if (x == 0){
         ui->textEdit->append("EXCELLENT CONNECTION");
         ui->level_1->setStyleSheet("QLabel { background-color: rgb(0, 255, 0); }");
@@ -319,6 +321,7 @@ void MainWindow::displayConnection(int x){
 }
 
 void MainWindow::clearDisplay(){
+    //Resets the gui to a clean state
     ui->textEdit->clear();
     ui->level_1->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
     ui->level_2->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
@@ -331,6 +334,7 @@ void MainWindow::clearDisplay(){
     ui->label->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
 }
 void MainWindow::checkConnection(){
+    //This is where we check the connection
     qDebug() << "Check connection...";
     if (state == "on" && displayingBattery == false){
         ui->level_1->setStyleSheet("QLabel { background-color: rgb(236, 236, 236); }");
@@ -345,6 +349,8 @@ void MainWindow::checkConnection(){
         connectionObject.sendclearDisplay();
         connectionObject.sendblink_modeLight();
         connectionObject.senddisplayConnection(connectionObject.checkConnection(ui->checkBox->isChecked(), ui->checkBox_2->isChecked(), ui->checkBox_3->isChecked(), ui->checkBox_4->isChecked()));
+        //The line above will get the type of connection (as an integer) and will pass that integer to the display function, which will then update the ui.
+        //As a general note, there are many things going in between the connection class and the mainwindow, essentially sending signals and values back and forth to eachother
     }
 
 }
