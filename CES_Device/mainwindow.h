@@ -52,7 +52,7 @@ private:
     bool ongoingTherapy = false;
 
     //dbmanager
-    QDate date;
+    QDateTime dateTime;
     DBManager db;
 
     //Battery
