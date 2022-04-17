@@ -3,8 +3,11 @@ Final Project
 April 16, 2022
 
 Team 18
-Israel Babalola, Sean Chung, Richard Kim, and Erica Morgan
-101147765, 101156263, 101138475, and 101015691
+
+Israel Babalola 101147765, 
+Sean Chung 101156263, 
+Richard Kim 101138475, 
+and Erica Morgan 101015691.
 
 //who did what
 //file structure
