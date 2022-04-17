@@ -10,10 +10,5 @@ Richard Kim 101138475,
 and Erica Morgan 101015691.
 
 //who did what
-Israel:
-Did connection.cpp, connection.h
-within mainwindow.cpp: blink_modeLight(), displayConnection(), clearDisplay(), checkConnection()
-Use Case Diagram, 
-Helped with: Use Cases, helped with sequence diagrams.
 //file structure
 //tested scenarios
