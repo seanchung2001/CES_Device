@@ -56,3 +56,65 @@ COMP3004_FinalProject_Team18:
 
 
 Tested Scenarios:
+
+    1)  Normal Use:
+            Pressed the power button to turn the device on.
+            Observed the battery level being displayed.
+            Chose a session and duration using buttons on GUI.
+            Started the session.
+            Observed the device showing result of the connection test.
+            Observed the battery level slightly decreasing.
+            Observed the soft on functionality slowly increasing the intensity.
+            Adjusted the intensity using 'UP' / 'DOWN' buttons.
+            Observed the topmost number light blinking.
+            Pressed the 'Record Session' button to save the therapy session information.
+            After few minutes, the session has ended.
+            Observed soft off functionality slowly decreasing the intensity.
+            Observed the device powered off automatically.
+            Pressed the 'View Session Logs' button to view the therapy session log.
+        
+        This scenario tested Use cases: 1, 3, 4, 5, 6, 7.
+    
+    2)  Powering off during a session:
+            Pressed the power button to turn the device on.
+            Observed the battery level being displayed.
+            Chose a session and duration using buttons on GUI.
+            Started the session.
+            Observed the device showing result of the connection test.
+            Observed the battery level slightly decreasing.
+            Observed the soft on functionality slowly increasing the intensity.
+            Pressed the power button again to end the session early and turn the device off.
+            Observed soft off functionality slowly decreasing the intensity.
+            Observed the device powered off.
+        
+        This scenario tested Use cases: 1, 2, 3, 4, 5.
+    
+    3)  Replacing battery:
+            Pressed the power button to turn the device on.
+            Observed the battery level being displayed.
+            Pressed the power button again to turn the device off.
+            Observed soft off functionality slowly decreasing the intensity.
+            Observed the device powered off.
+            Pressed the 'Replace Battery' button to replace the battery.
+            Pressed the power button to turn the device on again.
+            Observed the battery level is back to 800.
+        
+        This scenario tested Use cases: 1, 2, 3.
+    
+    4)  Connection Test:
+            Pressed the power button to turn the device on.
+            Observed the battery level being displayed.
+            Chose a session and duration using buttons on GUI.
+            Started the session.
+            Observed the device showing result of the connection test.
+
+            This sccenario has 3 variations:
+                1) With all 4 checkboxes clicked (Left Ear, Right Ear, Wet earlobe (L), Wet earlobe(R))
+                2) With only 2 checkboxes clicked (Left Ear, Right Ear)
+                3) With no checkboxes clicked.
+            
+            1 results in "Excellent Connection"
+            2 results in "Okay Connection"
+            3 results in "No Connection"
+
+        This scenario tested Use cases: 1, 4, 5.
