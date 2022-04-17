@@ -1,23 +1,23 @@
 #ifndef DBMANAGER_H
 #define DBMANAGER_H
 
-#include <iostream>
-#include <fstream>
-#include <string>
-using namespace std;
+#include <QString>
+#include <QFile>
+#include <QIODevice>
+#include <QTextStream>
 
 class DBManager {
-		
-	public:
-		//constructor
-		DBManager();
 
-		//other
-		string readLog();
-        void writeLog(string);
-	
-	private:
-		//variables
-        string fileName;
+    public:
+        //constructor
+        DBManager();
+
+        //other
+        QString readLog();
+        void writeLog(QString);
+
+    private:
+        //variables
+        QString fileName;
 };
 #endif

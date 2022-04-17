@@ -20,9 +20,6 @@ int connectionTest::checkConnection(bool w, bool x, bool y, bool z){
     }
 }
 
-//void connectionTest::sendcheckConnection(){
-  //  emit checkConnection();
-//}
 void connectionTest::sendblink_modeLight(){
     blink->start(1000);
     emit blink_modeLight();
@@ -30,15 +27,10 @@ void connectionTest::sendblink_modeLight(){
 void connectionTest::senddisplayConnection(int x){
     emit displayConnection(x);
 }
-void connectionTest::sendsoftOn(){
-    emit softOn();
-}
-void connectionTest::sendsoftOff(){
-    emit softOff();
-}
 void connectionTest::sendclearDisplay(){
     emit clearDisplay();
 }
-void connectionTest::sendwetEarLobes(){
-    emit wetEarLobes();
+
+void connectionTest::stopTimer(){
+    blink->stop();
 }

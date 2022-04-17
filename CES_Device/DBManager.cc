@@ -4,31 +4,38 @@
 DBManager::DBManager() {
     fileName = "database.txt";
 }
-//read database.txt and return
-string DBManager::readLog() {
-    //open file
-    ifstream DataBase(fileName);
-    //each line in file
-    string dataLine;
-    //entire file
-    string fullDataLog;
-    fullDataLog += "Sessions Log:\n";
-    //read line by line
-    while (getline (DataBase, dataLine)) {
-        fullDataLog += dataLine;
-        fullDataLog += '\n';
+//read database.txt and return as QString
+QString DBManager::readLog() {
+    //set File and open
+    QFile dataFile(fileName);
+    //var to save the entire log
+    QString fullDataLog;
+    //var to save just current line
+    QString dataLine;
+    //open as readonly
+    if (dataFile.open(QIODevice::ReadOnly)) {
+        //set textstream
+        QTextStream in(&dataFile);
+        //start out log with intro
+        fullDataLog += "Sessions Log:\n";
+        //while not at end
+        while(!in.atEnd()) {
+            //read line by line and append to fullDataLog
+            dataLine = in.readLine();
+            fullDataLog += dataLine;
+            fullDataLog += '\n';
+        }
+        dataFile.close();
     }
-    //close
-    DataBase.close();
-
     return fullDataLog;
 }
 //write to database.txt
-void DBManager::writeLog(string log) {
-    //open file
-    ofstream DataBase(fileName, ios::app);
-    //write
-    DataBase << log << endl;
-    //close
-    DataBase.close();
+void DBManager::writeLog(QString log) {
+    //set File
+    QFile dataFile(fileName);
+    //open for writing
+    if (dataFile.open(QIODevice::Append)) {
+        QTextStream stream(&dataFile);
+        stream << log << endl;
+    }
 }

@@ -17,14 +17,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     DBManager.cc \
+    battery.cpp \
     connectiontest.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    therapy.cpp
 
 HEADERS += \
     DBManager.h \
+    battery.h \
     connectiontest.h \
-    mainwindow.h
+    duration.h \
+    mainwindow.h \
+    session.h \
+    therapy.h
 
 FORMS += \
     mainwindow.ui

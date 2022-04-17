@@ -6,11 +6,15 @@
 #include <QPixmap>
 #include <QTimer>
 #include "connectiontest.h"
+#include "therapy.h"
+#include "session.h"
+#include "duration.h"
+#include "battery.h"
+
 //dbmanager
 #include "DBManager.h"
 #include <QString>
-#include <string>
-#include <QDate>
+#include <QDateTime>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -27,31 +31,65 @@ public:
 private:
     Ui::MainWindow *ui;
 
+    //Timers
     QTimer *batteryLevelTimer;
     QTimer *powerOffTimer;
+    QTimer *batteryLow_blinkTimer;
+    QTimer *sessionTimer;
+    QTimer *softOnOffTimer = new QTimer();
+    QTimer *intensityTimer = new QTimer();
 
     QString state = "off";
-    bool firstCommand;
+    QString lowBattery_blinkStatus = "off";
     connectionTest connectionObject;
     int alternatingNum = 0;
+
+    //Therapy
+    Therapy* therapy = NULL;
+    int session = 0;
+    int duration = 0;
+    int softOnOffLevel = 1;
+    bool ongoingTherapy = false;
+
     //dbmanager
-    QDate date;
+    QDateTime dateTime;
     DBManager db;
 
+    //Battery
+    battery *deviceBattery;
+    bool displayingBattery = false;
+
+    //Delay function
+    void delay();
 
 private slots:
+    //Sean's functions
     void power_on();
     void displayBatteryLevel();
     void batteryDisplay_off();
+    void lowBattery_blink();
     void power_off();
+    void replaceBattery();
 
-    void blink_modeLight(); // used
-    void displayConnection(int); // used
-    void softOn(); // need to talk with Erica
-    void softOff(); // need to talk with Erica
-    void clearDisplay(); // used but do we need this?
-    void wetEarLobes(); // do we need this?
-    void checkConnection(); // used
+    //Israels Functions
+    void blink_modeLight();
+    void displayConnection(int);
+    void clearDisplay();
+    void checkConnection();
+
+    //Erica's functions
+    int getDuration();
+    void setDuration();
+    void setSession();
+    void startTherapy();
+    void endTherapy();
+    void incIntensity();
+    void decIntensity();
+    void displaySoftOn();
+    void displaySoftOff();
+    void blinkOnIntensity();
+    void blinkOffIntensity();
+
     //dbmanager
     void recordSession();
     void viewDatabase();
